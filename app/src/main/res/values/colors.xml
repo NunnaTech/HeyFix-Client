@@ -33,6 +33,7 @@
     <color name="md_theme_light_surfaceTintColor">#2F53D0</color>
     <color name="SoftlyGray">#8E9AAC</color>
     <color name="SoftlyBlack">#2E3B53</color>
+    <color name="HeyFixPrimary">#3558D5</color>
 
     <!--  Custom colors:  -->
     <color name="Accent">#00AC1C</color>
