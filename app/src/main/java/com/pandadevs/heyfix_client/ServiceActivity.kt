@@ -6,6 +6,7 @@ import com.pandadevs.heyfix_client.databinding.ActivityServiceBinding
 
 class ServiceActivity : AppCompatActivity() {
     lateinit var binding: ActivityServiceBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityServiceBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)

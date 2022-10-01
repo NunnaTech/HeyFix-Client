@@ -6,6 +6,7 @@ import com.pandadevs.heyfix_client.databinding.ActivityRateBinding
 
 class RateActivity : AppCompatActivity() {
     lateinit var binding : ActivityRateBinding
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRateBinding.inflate(layoutInflater)
