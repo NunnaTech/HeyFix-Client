@@ -5,4 +5,6 @@
 
 
     <!-- SP: Text -->
+    <dimen name="dimenTextTile">36sp</dimen>
+    <dimen name="dimenNormalText">20sp</dimen>
 </resources>
