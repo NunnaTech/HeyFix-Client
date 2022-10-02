@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">HeyFix-Client</string>
+    <string name="tituloSesion">Iniciar Sesión</string>
+    <string name="textCorreo">name@example.com</string>
+    <string name="textPassword">********</string>
+    <string name="textSesionBtn">Iniciar</string>
+    <string name="textOr">o</string>
+    <string name="textGoogle">Iniciar con Google</string>
+    <string name="textSinCuenta">¿Aún no tienes cuenta?</string>
+    <string name="textRegistrar">Regístrate</string>
+    <string name="textCalificar">Calificar</string>
+    <string name="strImHere">¡Estoy aquí!</string>
 </resources>
