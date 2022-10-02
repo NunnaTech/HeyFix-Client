@@ -2,7 +2,14 @@
 <resources>
     <!-- DP: Boxes and containers -->
     <dimen name="dimenScreenPadding">20dp</dimen>
+    <dimen name="dimenLogoSplash">250dp</dimen>
+    <dimen name="dimenMarginTopLogoSplash">10dp</dimen>
 
 
     <!-- SP: Text -->
+    <dimen name="dimenTextSplash">40sp</dimen>
+    <dimen name="dimenNormalText">20sp</dimen>
+    <dimen name="dimenText">16sp</dimen>
+    <dimen name="dimenTitle">36sp</dimen>
+    <dimen name="dimenSubTitle">30sp</dimen>
 </resources>
