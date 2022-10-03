@@ -45,14 +45,20 @@
         </activity>
 
         <activity
-            android:name=".ChangePasswordActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".RequestServiceActivity"
+            android:exported="false">
         </activity>
+
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false">
+        </activity>
+
 
         <activity
             android:name=".ProfileActivity"
@@ -61,7 +67,13 @@
 
         <activity
             android:name=".SplashActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 
