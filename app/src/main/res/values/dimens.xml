@@ -4,7 +4,7 @@
     <dimen name="dimenScreenPadding">20dp</dimen>
     <dimen name="dimenLogoSplash">250dp</dimen>
     <dimen name="dimenMarginTopLogoSplash">10dp</dimen>
-
+    <dimen name="dimenContentPadding">10dp</dimen>
 
     <!-- SP: Text -->
     <dimen name="dimenTextSplash">40sp</dimen>
