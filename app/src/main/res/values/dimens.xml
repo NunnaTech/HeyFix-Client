@@ -3,11 +3,6 @@
     <!-- DP: Boxes and containers -->
     <dimen name="dimenScreenPadding">20dp</dimen>
     <dimen name="dimenContentPadding">10dp</dimen>
-    <dimen name="littleTitle">20sp</dimen>
-    <dimen name="textUser">24sp</dimen>
-    <dimen name="littleSubTitle">16sp</dimen>
-    <dimen name="text">15sp</dimen>
-    <dimen name="title">36sp</dimen>
 
 
     <!-- SP: Text -->
