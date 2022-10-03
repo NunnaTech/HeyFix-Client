@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:text="Registrate con Google"
-            android:drawableLeft="@drawable/ic_google_icon" />
+            android:drawableLeft="@drawable/ic_google" />
 
         <LinearLayout
             android:layout_width="match_parent"
