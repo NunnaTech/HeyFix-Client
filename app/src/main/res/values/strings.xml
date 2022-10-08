@@ -13,11 +13,18 @@
     <string name="textCalificar">Calificar</string>
     <string name="strImHere">¡Estoy aquí!</string>
 
+    <!--  Home Fragment  -->
+    <string name="strChooseService">Selecciona un servicio</string>
+
+    <!--    Services Fragment-->
+    <string name="strHistoryServicesEmpty">No hay historial de servicios</string>
+
     <!--    Profile Activity-->
     <string name="strTitleProfile">Información Personal</string>
     <string name="strEditProfile">Toca un campo para editar</string>
     <string name="strSaveChanges">Guardar Cambios</string>
     <string name="strGoToChangePass">Cambiar Contraseña</string>
+    <string name="strGoToAbout">Sobre nosotros</string>
 
     <!--    ChangePassword Activity-->
     <string name="strTitleChangePass">Cambiar</string>
@@ -34,5 +41,7 @@
     <string name="strPrivacy">POLÍTICA DE PRIVACIDAD</string>
     <string name="strSoftware">SOFTWARE DE CÓDIGO ABIERTO</string>
     <string name="strBrand">© 2022 ThePandaDevs</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

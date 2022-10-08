@@ -6,48 +6,56 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     android:orientation="vertical"
-    android:padding="@dimen/dimenScreenPadding"
     tools:context=".RateActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ablAPp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calificación del servicio"
-        android:textColor="@color/md_theme_light_shadow"
-        android:textSize="@dimen/dimenSubTitle"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="20dp" />
+        android:backgroundTint="@color/md_theme_light_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/tbApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="@color/SoftlyWhite"
+            app:title="Calificación del servicio"
+            app:titleTextColor="@color/SoftlyWhite" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/ablAPp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:src="@color/md_theme_light_primary" />
+            android:src="@color/Accent" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="James Garcia Servantes"
-            android:textSize="@dimen/dimenNormalText"
+            android:text="Jelasio Martinez Fonseca"
+            android:textColor="@color/md_theme_light_primary"
+            android:textSize="@dimen/dimenSubTitle"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
@@ -57,7 +65,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_border" />
 
 
             <ImageButton
@@ -66,7 +74,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_border" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -74,16 +82,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star" />
-
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_border" />
 
 
             <ImageButton
@@ -92,18 +91,24 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star" />
+                android:src="@drawable/ic_star_border" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:backgroundTint="@color/md_theme_light_surface"
+                android:src="@drawable/ic_star_border" />
         </LinearLayout>
-
-
     </LinearLayout>
-
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="@dimen/dimenScreenPadding"
         android:text="@string/textCalificar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -11,5 +11,6 @@ class RateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.tbApp.setNavigationOnClickListener { finish() }
     }
 }
