@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="Historial de servicios"
+        android:text="@string/strHisoryServices"
         android:textSize="@dimen/dimenSubTitle"
         android:textStyle="bold" />
 

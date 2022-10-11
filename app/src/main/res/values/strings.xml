@@ -2,22 +2,23 @@
 <resources>
     <string name="app_name">HeyFix-Client</string>
 
-    <string name="tituloSesion">Iniciar Sesión</string>
-    <string name="textCorreo">name@example.com</string>
-    <string name="textPassword">********</string>
-    <string name="textSesionBtn">Iniciar</string>
-    <string name="textOr">o</string>
-    <string name="textGoogle">Iniciar con Google</string>
-    <string name="textSinCuenta">¿Aún no tienes cuenta?</string>
-    <string name="textRegistrar">Regístrate</string>
-    <string name="textCalificar">Calificar</string>
-    <string name="strImHere">¡Estoy aquí!</string>
-
     <!--  Home Fragment  -->
     <string name="strChooseService">Selecciona un servicio</string>
 
     <!--    Services Fragment-->
     <string name="strHistoryServicesEmpty">No hay historial de servicios</string>
+    <string name="strHisoryServices">Historial de servicios</string>
+
+    <!--  Login Activity  -->
+    <string name="strLog">Inicio de</string>
+    <string name="strIn">sesión</string>
+    <string name="strLogInWithGoogle">Iniciar con Google</string>
+    <string name="strWelcome">Inicia sesión para poder encontrar a las mejores personas para arreglar lo que deseas reparar.</string>
+    <string name="strPassword">Contraseña</string>
+    <string name="strEmail">Correo electrónico</string>
+    <string name="strRegister">Registrarse</string>
+    <string name="strLogin">Iniciar sesión</string>
+    <string name="strO">o</string>
 
     <!--    Profile Activity-->
     <string name="strTitleProfile">Información Personal</string>
@@ -29,19 +30,49 @@
     <!--    ChangePassword Activity-->
     <string name="strTitleChangePass">Cambiar</string>
     <string name="strSubTitleChangePass">Contraseña</string>
-    <string name="strPassRequest">Ingresa tu contraseña actual. La nueva contraseña debe tener entre 8 a 16 carácteres y debe ser diferente a la anterior.</string>
+    <string name="strPassRequest">Ingresa tu contraseña actual, una nueva contraseña y su confirmación, demás estas deben tener entre 8 a 10 carácteres</string>
     <string name="strChangePass">Cambiar Contraseña</string>
+    <string name="strCurrentlyPassword">Contraseña actual</string>
+    <string name="strNewPassword">Nueva contraseña</string>
+    <string name="strRepeatNewPassword">Repetir nueva contraseña</string>
 
     <!--    About Activity-->
+    <string name="strAbourBar">Sobre nosotros</string>
     <string name="strTitleAbout">HeyFix</string>
-    <string name="strSubTitleAbout">HeyFix Build V2.0.10</string>
+    <string name="strSubTitleAbout">v1.0</string>
     <string name="strGooglePlay">Califícanos en Google Play</string>
     <string name="strSocialNetworks">Síguenos en Redes Sociales</string>
     <string name="strTerms">TÉRMINOS DE USO</string>
     <string name="strPrivacy">POLÍTICA DE PRIVACIDAD</string>
     <string name="strSoftware">SOFTWARE DE CÓDIGO ABIERTO</string>
     <string name="strBrand">© 2022 ThePandaDevs</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    Chat activity-->
+    <string name="strTypeMessage">Escribe un mensaje</string>
+
+    <!--    Rate activity -->
+    <string name="strRateAppBar">Calificación del servicio</string>
+    <string name="strRate">Calificar</string>
+
+    <!--    Register Activity-->
+    <string name="strCreateNew">Crear nueva</string>
+    <string name="strAccount">cuenta</string>
+    <string name="strDescription">Por favor, llena los siguientes campos:</string>
+    <string name="strRegisterWithGoogle">Registrate con Google</string>
+    <string name="strName">Nombre</string>
+    <string name="strLastname">Apellidos</string>
+
+    <!--  Request service Activity  -->
+    <string name="strServiceInProgress">Servicio en proceso</string>
+    <string name="strGoToChat">Ir al chat</string>
+    <string name="strCancelService">Cancelar servicio</string>
+
+    <!--  Ubication Activity  -->
+    <string name="strUbicationAppBar">Ubicación</string>
+    <string name="strImHere">Estoy aquí</string>
+
+    <!--   Profile Fragment-->
+    <string name="strPhone">Teléfono</string>
+
 
 </resources>

@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:navigationIconTint="@color/SoftlyWhite"
-            app:title="Calificación del servicio"
+            app:title="@string/strRateAppBar"
             app:titleTextColor="@color/SoftlyWhite" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnRate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ablAPp">
@@ -44,10 +44,12 @@
             android:src="@color/Accent" />
 
         <TextView
+            android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Jelasio Martinez Fonseca"
+            tools:text="Jelasio Martinez Fonseca"
+            android:text="Person"
             android:textColor="@color/md_theme_light_primary"
             android:textSize="@dimen/dimenSubTitle"
             android:textStyle="bold" />
@@ -60,32 +62,17 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/ibtnStar1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star_border" />
-
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star_border" />
+                android:src="@drawable/ic_star_border"
+                />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star_border" />
-
-
-            <ImageButton
+                android:id="@+id/ibtnStar2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -94,6 +81,25 @@
                 android:src="@drawable/ic_star_border" />
 
             <ImageButton
+                android:id="@+id/ibtnStar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:backgroundTint="@color/md_theme_light_surface"
+                android:src="@drawable/ic_star_border" />
+
+            <ImageButton
+                android:id="@+id/ibtnStar4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:backgroundTint="@color/md_theme_light_surface"
+                android:src="@drawable/ic_star_border" />
+
+            <ImageButton
+                android:id="@+id/ibtnStar5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -104,12 +110,12 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnRate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimenScreenPadding"
-        android:text="@string/textCalificar"
+        android:text="@string/strRate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

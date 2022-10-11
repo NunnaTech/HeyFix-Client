@@ -8,6 +8,7 @@
     tools:context=".HomeFragment">
 
     <TextView
+        android:id="@+id/tvWelcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Buenos días,"
@@ -15,6 +16,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Raúl"

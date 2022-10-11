@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Servicio en proceso" />
+            app:title="@string/strServiceInProgress" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -39,12 +39,13 @@
             android:src="@color/Accent" />
 
         <TextView
-            android:id="@+id/nameText"
+            android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Jelasio Martinez Fonseca"
+            tools:text="Jelasio Martinez Fonseca"
+            android:text="Person"
             android:textColor="@color/md_theme_light_primary"
             android:textSize="@dimen/dimenSubTitle"
             android:textStyle="bold" />
@@ -75,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="4.0"
+                    tools:text="4.0"
                     android:textSize="@dimen/dimenText" />
             </LinearLayout>
 
@@ -96,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Plomeria"
+                    tools:text="Plomeria"
                     android:textSize="@dimen/dimenText" />
             </LinearLayout>
 
@@ -116,6 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    tools:text="Tsuru (Verde)"
                     android:text="Tsuru (Verde)"
                     android:textSize="@dimen/dimenText" />
             </LinearLayout>
@@ -137,7 +141,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:backgroundTint="@color/md_theme_light_secondary"
-            android:text="Ir al chat"
+            android:text="@string/strGoToChat"
             app:icon="@drawable/ic_chat" />
 
         <Button
@@ -145,14 +149,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/md_theme_light_tertiary"
-            android:text="Cancelar servicio"
+            android:text="@string/strCancelService"
             app:icon="@drawable/ic_cancel" />
 
         <Button
             android:id="@+id/btnRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Calificar"
+            android:text="@string/strRate"
             app:icon="@drawable/ic_cancel" />
 
     </LinearLayout>

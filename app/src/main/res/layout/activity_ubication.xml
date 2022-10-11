@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:navigationIconTint="@color/SoftlyWhite"
-            app:title="Ubicación"
+            app:title="@string/strUbicationAppBar"
             app:titleTextColor="@color/SoftlyWhite" />
     </com.google.android.material.appbar.AppBarLayout>
 
