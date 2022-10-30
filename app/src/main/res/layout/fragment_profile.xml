@@ -91,7 +91,7 @@
                         app:counterMaxLength="50"
                         app:endIconMode="clear_text"
                         app:errorEnabled="true"
-                        app:helperText="Ej: Luis Enrique"
+                        app:helperText="* Requerido"
                         app:startIconDrawable="@drawable/ic_person">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -112,7 +112,7 @@
                         app:counterMaxLength="50"
                         app:endIconMode="clear_text"
                         app:errorEnabled="true"
-                        app:helperText="Ej: Álvarez Ortiz"
+                        app:helperText="* Requerido"
                         app:startIconDrawable="@drawable/ic_person">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -134,7 +134,6 @@
                         app:counterMaxLength="50"
                         app:endIconMode="clear_text"
                         app:errorEnabled="true"
-                        app:helperText="Ej: luis@gmail.com"
                         app:startIconDrawable="@drawable/ic_email">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -154,7 +153,7 @@
                         app:counterMaxLength="10"
                         app:endIconMode="clear_text"
                         app:errorEnabled="true"
-                        app:helperText="Ej: 7774568596"
+                        app:helperText="* Requerido"
                         app:startIconDrawable="@drawable/ic_phone">
 
                         <com.google.android.material.textfield.TextInputEditText
