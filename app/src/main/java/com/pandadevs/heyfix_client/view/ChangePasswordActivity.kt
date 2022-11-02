@@ -1,10 +1,12 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputLayout
 import com.pandadevs.heyfix_client.databinding.ActivityChangePasswordBinding
+import com.pandadevs.heyfix_client.utils.SnackbarShow
+import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
 
 class ChangePasswordActivity : AppCompatActivity() {
     lateinit var binding: ActivityChangePasswordBinding
@@ -57,15 +59,5 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
     }
 
-    private fun fieldNotEmpty(field: TextInputLayout, text: String, min: Int = 6): Boolean {
-        val isCorrectField = text.isNotEmpty() && text.length >= min
-        if (isCorrectField) {
-            field.error = null
-            field.helperText = "* Requerido"
-        } else {
-            field.helperText = null
-            field.error = "Debe contener al menos $min caracteres"
-        }
-        return isCorrectField
-    }
+
 }

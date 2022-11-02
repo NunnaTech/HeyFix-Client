@@ -1,4 +1,4 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.data.model
 
 data class Member(
     val name: String,

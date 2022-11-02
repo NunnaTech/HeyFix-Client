@@ -1,4 +1,4 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,9 @@ import android.os.Bundle
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputLayout
 import com.pandadevs.heyfix_client.databinding.ActivityLoginBinding
+import com.pandadevs.heyfix_client.utils.SnackbarShow
+import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
+import com.pandadevs.heyfix_client.utils.Validations.fieldRegexEmail
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
@@ -49,29 +52,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun fieldRegexEmail(field: TextInputLayout, text: String): Boolean {
-        val isCorrectField = Regex("[a-z0-9]+@[a-z]+\\.[a-z]{2,3}").matches(text)
-        if (isCorrectField) {
-            field.error = null
-            field.helperText = "* Requerido"
-        } else {
-            field.helperText = null
-            field.error = "Debe ser un correo válido"
-        }
-        return isCorrectField
-    }
 
-    private fun fieldNotEmpty(field: TextInputLayout, text: String, min: Int = 6): Boolean {
-        val isCorrectField = text.isNotEmpty() && text.length >= min
-        if (isCorrectField) {
-            field.error = null
-            field.helperText = "* Requerido"
-        } else {
-            field.helperText = null
-            field.error = "Debe contener al menos $min caracteres"
-        }
-        return isCorrectField
-    }
 
     private fun goToActivity(cls: Class<*>) {
         startActivity(Intent(this@LoginActivity, cls))

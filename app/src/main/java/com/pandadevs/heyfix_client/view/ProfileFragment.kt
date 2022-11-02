@@ -1,5 +1,6 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.pandadevs.heyfix_client.databinding.FragmentProfileBinding
+import com.pandadevs.heyfix_client.utils.SnackbarShow
+import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
+import com.pandadevs.heyfix_client.utils.Validations.fieldRegexName
 
 class ProfileFragment : Fragment() {
 
@@ -24,7 +29,6 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         editsInputsList = listOf(binding.etName, binding.etLastName, binding.etPhone)
         areCorrectFieldsList = mutableListOf(false, false, false)
-
         binding.btnChangePass.setOnClickListener { goToActivity(ChangePasswordActivity::class.java) }
         binding.btnAbout.setOnClickListener { goToActivity(AboutActivity::class.java) }
         binding.btnSave.setOnClickListener { checkFields() }
@@ -64,30 +68,6 @@ class ProfileFragment : Fragment() {
             areCorrectFieldsList[2] = fieldNotEmpty(editsInputsList[2], text.toString(), 10)
         }
 
-    }
-
-    private fun fieldNotEmpty(field: TextInputLayout, text: String, min: Int = 6): Boolean {
-        val isCorrectField = text.isNotEmpty() && text.length >= min
-        if (isCorrectField) {
-            field.error = null
-            field.helperText = "* Requerido"
-        } else {
-            field.helperText = null
-            field.error = "Debe contener al menos $min caracteres"
-        }
-        return isCorrectField
-    }
-
-    private fun fieldRegexName(field: TextInputLayout, text: String): Boolean {
-        val isCorrectField = Regex("^[A-Za-zÁÉÍÓÚÑáéíóúñ. ]*$").matches(text)
-        if (isCorrectField) {
-            field.error = null
-            field.helperText = "* Requerido"
-        } else {
-            field.helperText = null
-            field.error = "Debe de contener caracteres válidos"
-        }
-        return isCorrectField
     }
 
     private fun goToActivity(cls: Class<*>) {

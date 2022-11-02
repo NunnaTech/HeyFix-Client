@@ -1,8 +1,10 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pandadevs.heyfix_client.R
+import com.pandadevs.heyfix_client.data.model.Member
 import com.pandadevs.heyfix_client.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {

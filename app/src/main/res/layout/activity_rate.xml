@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     android:orientation="vertical"
-    tools:context=".RateActivity">
+    tools:context=".view.RateActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/ablAPp"

@@ -1,4 +1,4 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pandadevs.heyfix_client.R
+import com.pandadevs.heyfix_client.data.model.Member
 import com.pandadevs.heyfix_client.databinding.ItemMemberBinding
 
 class AdapterMember(private val list: List<Member>, private val context: Context) :

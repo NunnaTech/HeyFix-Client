@@ -1,4 +1,4 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.utils
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar

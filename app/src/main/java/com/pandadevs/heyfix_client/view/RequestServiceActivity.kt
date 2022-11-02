@@ -1,4 +1,4 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

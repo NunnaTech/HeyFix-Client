@@ -1,10 +1,15 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputLayout
+import com.pandadevs.heyfix_client.R
 import com.pandadevs.heyfix_client.databinding.ActivityRegisterBinding
+import com.pandadevs.heyfix_client.utils.SnackbarShow
+import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
+import com.pandadevs.heyfix_client.utils.Validations.fieldRegexEmail
+import com.pandadevs.heyfix_client.utils.Validations.fieldRegexName
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -93,39 +98,5 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun fieldRegexName(field: TextInputLayout, text: String): Boolean {
-        val isCorrectField = Regex("^[A-Za-zÁÉÍÓÚÑáéíóúñ. ]*$").matches(text)
-        if (isCorrectField) {
-            field.error = null
-            field.helperText = "* Requerido"
-        } else {
-            field.helperText = null
-            field.error = "Debe de contener caracteres válidos"
-        }
-        return isCorrectField
-    }
 
-    private fun fieldRegexEmail(field: TextInputLayout, text: String): Boolean {
-        val isCorrectField = Regex("[a-z0-9]+@[a-z]+\\.[a-z]{2,3}").matches(text)
-        if (isCorrectField) {
-            field.error = null
-            field.helperText = "* Requerido"
-        } else {
-            field.helperText = null
-            field.error = "Debe ser un correo válido"
-        }
-        return isCorrectField
-    }
-
-    private fun fieldNotEmpty(field: TextInputLayout, text: String, min: Int = 6): Boolean {
-        val isCorrectField = text.isNotEmpty() && text.length >= min
-        if (isCorrectField) {
-            field.error = null
-            field.helperText = "* Requerido"
-        } else {
-            field.helperText = null
-            field.error = "Debe contener al menos $min caracteres"
-        }
-        return isCorrectField
-    }
 }

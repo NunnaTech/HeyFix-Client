@@ -1,4 +1,4 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

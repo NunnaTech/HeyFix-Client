@@ -1,10 +1,11 @@
-package com.pandadevs.heyfix_client
+package com.pandadevs.heyfix_client.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.pandadevs.heyfix_client.R
 import com.pandadevs.heyfix_client.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
