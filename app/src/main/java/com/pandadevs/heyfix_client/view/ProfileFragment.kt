@@ -1,12 +1,19 @@
 package com.pandadevs.heyfix_client.view
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.textfield.TextInputLayout
@@ -19,6 +26,8 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    private lateinit var imageUrl: Uri
+    private var isNotEmpty = false
     private var editsInputsList: List<TextInputLayout> = listOf()
     private var areCorrectFieldsList: MutableList<Boolean> = mutableListOf()
 
@@ -33,10 +42,55 @@ class ProfileFragment : Fragment() {
         binding.btnAbout.setOnClickListener { goToActivity(AboutActivity::class.java) }
         binding.btnSave.setOnClickListener { checkFields() }
         activeEventListenerOnEditText()
-
+        // change profile picture
+        binding.btnProfilePicture.setOnClickListener { requestPermission() }
         return binding.root
     }
+    private fun requestPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            when{
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
 
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    pickUpFromGallery()
+                }
+                else ->  requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        }else{
+            pickUpFromGallery()
+        }
+    }
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ){ isGranted ->
+
+        if (isGranted){
+            pickUpFromGallery()
+        }else{
+            Toast.makeText(
+                requireContext(),
+                "Permisos denegados",
+                Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val startForActivityResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){ result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            val data = result.data?.data
+            imageUrl = data!!
+            isNotEmpty = true
+            binding.circleImageView.setImageURI(data)
+        }
+    }
+    private fun pickUpFromGallery(){
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startForActivityResult.launch(intent)
+    }
     private fun checkFields() {
         if (areCorrectFieldsList.none { !it }) {
             SnackbarShow.showSnackbar(binding.root, "Guardado exitoso")

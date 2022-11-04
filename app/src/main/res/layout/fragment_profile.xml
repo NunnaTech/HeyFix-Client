@@ -32,6 +32,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
+                    android:id="@+id/btnProfilePicture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:icon="@drawable/ic_add_image"
@@ -140,7 +141,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress"
-                            android:maxLength="50" />
+                            android:maxLength="50"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -168,18 +170,20 @@
             </com.google.android.material.card.MaterialCardView>
 
             <Button
-                android:id="@+id/btnChangePass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="@color/md_theme_light_secondary"
-                android:text="@string/strGoToChangePass" />
-
-            <Button
                 android:id="@+id/btnSave"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/strSaveChanges" />
+
+            <Button
+                android:id="@+id/btnChangePass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="@color/md_theme_light_secondary"
+                android:text="@string/strGoToChangePass" />
+
 
             <Button
                 android:id="@+id/btnAbout"
