@@ -1,14 +1,17 @@
 package com.pandadevs.heyfix_client.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.pandadevs.heyfix_client.databinding.ActivityChangePasswordBinding
 import com.pandadevs.heyfix_client.utils.SnackbarShow
+import com.pandadevs.heyfix_client.utils.Validations
 import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
 
-class ChangePasswordActivity : AppCompatActivity() {
+class   ChangePasswordActivity : AppCompatActivity() {
     lateinit var binding: ActivityChangePasswordBinding
     private var editsInputsList: List<TextInputLayout> = listOf()
     private var areCorrectFieldsList: MutableList<Boolean> = mutableListOf()
@@ -19,21 +22,33 @@ class ChangePasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.tbApp.setNavigationOnClickListener { finish() }
         editsInputsList =
-            listOf(binding.etCurrentlyPassword, binding.etNewPassword, binding.etRepeatNewPassword)
+            listOf(binding.etEmail, binding.etNewPassword, binding.etRepeatNewPassword)
         areCorrectFieldsList = mutableListOf(false, false, false)
         activeEventListenerOnEditText()
         binding.btnChangePass.setOnClickListener { checkFields() }
+
     }
 
     private fun checkFields() {
-        if (areCorrectFieldsList.none { !it } && checkPasswordsFields()) {
-            SnackbarShow.showSnackbar(binding.root, "Cambio exitoso")
-        } else {
-            editsInputsList.forEachIndexed { index, it ->
-                if (!areCorrectFieldsList[index])
-                    it.error = "* Requerido"
+        var user = FirebaseAuth.getInstance().currentUser
+        var newPassword = binding.etNewPassword.editText.toString()
+        if(user!=null){
+            if (areCorrectFieldsList.none { !it } && checkPasswordsFields()) {
+                user!!.updatePassword(newPassword).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        SnackbarShow.showSnackbar(binding.root, "Cambio exitoso")
+                    } else {
+                        SnackbarShow.showSnackbar(binding.root, "Error al actualizar")
+                    }
+                }
+            } else {
+                editsInputsList.forEachIndexed { index, it ->
+                    if (!areCorrectFieldsList[index])
+                        it.error = "* Requerido"
+                }
             }
         }
+
     }
 
     private fun checkPasswordsFields(): Boolean {
@@ -48,8 +63,12 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     private fun activeEventListenerOnEditText() {
-        binding.etCurrentlyPassword.editText?.doOnTextChanged { text, _, _, _ ->
-            areCorrectFieldsList[0] = fieldNotEmpty(editsInputsList[0], text.toString())
+        binding.etEmail.editText?.doOnTextChanged { text, _, _, _ ->
+            areCorrectFieldsList[0] =
+                fieldNotEmpty(editsInputsList[0], text.toString()) && Validations.fieldRegexEmail(
+                    editsInputsList[0],
+                    text.toString()
+                )
         }
         binding.etNewPassword.editText?.doOnTextChanged { text, _, _, _ ->
             areCorrectFieldsList[1] = fieldNotEmpty(editsInputsList[1], text.toString())
