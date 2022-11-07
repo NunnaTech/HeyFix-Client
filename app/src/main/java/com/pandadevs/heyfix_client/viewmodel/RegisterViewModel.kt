@@ -10,7 +10,7 @@ class RegisterViewModel: ViewModel() {
     var error: MutableLiveData<String> = MutableLiveData()
 
     suspend fun registerData(user:UserPost, password:String){
-        var response = RegisterProvider.registerDataUser(user,password)
+        val response = RegisterProvider.registerDataUser(user,password)
         if (response == "success"){
             result.postValue("Registro Exitoso")
         }else{
