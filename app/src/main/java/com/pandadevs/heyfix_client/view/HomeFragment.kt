@@ -64,7 +64,6 @@ class HomeFragment : Fragment(), CategoryAdapter.MyEvents {
     private fun setOnViewSuccess(list: List<CategoryModel>) {
         binding.llLoading.visibility = View.INVISIBLE
         if (list.isNotEmpty()) {
-            Log.i("FIRESTORE", "Categories: ${list.size}")
             binding.rvServices.layoutManager = GridLayoutManager(context, 2)
             adapter = CategoryAdapter(this, requireContext())
             binding.rvServices.adapter = adapter
@@ -74,6 +73,8 @@ class HomeFragment : Fragment(), CategoryAdapter.MyEvents {
     }
 
     override fun onClick(category: CategoryModel) {
-        SnackbarShow.showSnackbar(binding.root, category.name)
+        val intent = Intent(context, MapsActivity::class.java)
+        intent.putExtra(MapsActivity.CATEGORY, category)
+        activity?.startActivity(intent)
     }
 }

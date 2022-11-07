@@ -73,6 +73,7 @@
 
     <!--   Profile Fragment-->
     <string name="strPhone">Teléfono</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 
 </resources>
