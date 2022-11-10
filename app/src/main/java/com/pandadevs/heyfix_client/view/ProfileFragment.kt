@@ -15,12 +15,16 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
+import com.pandadevs.heyfix_client.data.model.UserGet
 import com.pandadevs.heyfix_client.databinding.FragmentProfileBinding
+import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
 import com.pandadevs.heyfix_client.utils.SnackbarShow
 import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
 import com.pandadevs.heyfix_client.utils.Validations.fieldRegexName
+import com.pandadevs.heyfix_client.viewmodel.ProfileViewModel
 
 class ProfileFragment : Fragment() {
 
@@ -30,21 +34,68 @@ class ProfileFragment : Fragment() {
     private var isNotEmpty = false
     private var editsInputsList: List<TextInputLayout> = listOf()
     private var areCorrectFieldsList: MutableList<Boolean> = mutableListOf()
+    private lateinit var user:UserGet
+    lateinit var viewModel:ProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        editsInputsList = listOf(binding.etName, binding.etLastName, binding.etPhone)
+        editsInputsList = listOf(binding.etName, binding.etFirstSurname, binding.etPhone)
         areCorrectFieldsList = mutableListOf(false, false, false)
         binding.btnChangePass.setOnClickListener { goToActivity(ChangePasswordActivity::class.java) }
         binding.btnAbout.setOnClickListener { goToActivity(AboutActivity::class.java) }
         binding.btnSave.setOnClickListener { checkFields() }
         activeEventListenerOnEditText()
+        // viewModel
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+
         // change profile picture
         binding.btnProfilePicture.setOnClickListener { requestPermission() }
+        // Load current data
+        user = SharedPreferenceManager(requireContext()).getUser()!!
+        // Set data
+        Glide.with(requireContext()).load(user.picture).into(binding.circleImageView)
+        binding.txtUserName.text = user.name + " " + user.first_surname
+        binding.etEmail.editText?.setText(user.email)
+        binding.etName.editText?.setText(user.name)
+        binding.etFirstSurname.editText?.setText(user.first_surname)
+        binding.etSecondSurname.editText?.setText(user.second_surname)
+        binding.etPhone.editText?.setText(user.phone_number)
+        // Inflate the layout for this fragment
+        initObservers()
+        // update data
+        binding.btnSave.setOnClickListener {
+            user.name = binding.etName.editText?.text.toString()
+            user.first_surname = binding.etFirstSurname.editText?.text.toString()
+            user.second_surname = binding.etSecondSurname.editText?.text.toString()
+            user.phone_number = binding.etPhone.editText?.text.toString()
+            if(isNotEmpty)
+                viewModel.uploadUserImage(imageUrl)
+            viewModel.updateUserData(user)
+        }
+        // logout
+        binding.btnLogout.setOnClickListener {
+            SharedPreferenceManager(requireContext()).cleanShared()
+            startActivity(Intent(requireContext(), SplashActivity::class.java))
+            activity?.finish()
+
+        }
         return binding.root
+    }
+    private fun initObservers(){
+        viewModel.isDataProgress.observe(this) {
+            if (it) {
+                System.out.println("Loya: Loading...")
+            } else {
+                System.out.println("Loya: Done")
+            }
+            viewModel.result.observe(this) {
+                SharedPreferenceManager(requireContext()).saveUser(user)!!
+                Toast.makeText(context,"data updated", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
     private fun requestPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -84,6 +135,8 @@ class ProfileFragment : Fragment() {
             imageUrl = data!!
             isNotEmpty = true
             binding.circleImageView.setImageURI(data)
+            System.out.println("Image-ll url: $imageUrl")
+            System.out.println("Image-ll data: $data")
         }
     }
     private fun pickUpFromGallery(){
@@ -110,9 +163,16 @@ class ProfileFragment : Fragment() {
                 )
         }
 
-        binding.etLastName.editText?.doOnTextChanged { text, _, _, _ ->
+        binding.etFirstSurname.editText?.doOnTextChanged { text, _, _, _ ->
             areCorrectFieldsList[1] =
                 fieldNotEmpty(editsInputsList[1], text.toString(), 2) && fieldRegexName(
+                    editsInputsList[1],
+                    text.toString()
+                )
+        }
+        binding.etSecondSurname.editText?.doOnTextChanged { text, _, _, _ ->
+            areCorrectFieldsList[1] =
+                 fieldRegexName(
                     editsInputsList[1],
                     text.toString()
                 )

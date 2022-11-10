@@ -39,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
         editsInputsList = listOf(
             binding.etName,
-            binding.etLastName,
+            binding.etFirstSurname,
             binding.etEmail,
             binding.etPhone,
             binding.etNewPassword,
@@ -72,11 +72,12 @@ class RegisterActivity : AppCompatActivity() {
 
             if (binding.etNewPassword.editText?.text.toString()
                 == binding.etRepeatNewPassword.editText?.text.toString()){
-                var names = binding.etLastName.editText?.text.toString().split(" ")
+                var firstSurname = binding.etFirstSurname.editText?.text.toString()
+                var secondSurname = binding.etSecondSurname.editText?.text.toString()
                 var user = UserPost(
                     binding.etName.editText?.text.toString(),
-                    names[0],
-                    second_surname = if (names.size > 1) names[1] else "" ,
+                    firstSurname,
+                    secondSurname,
                     true,
                     true,
                     binding.etEmail.editText?.text.toString(),
@@ -124,9 +125,16 @@ class RegisterActivity : AppCompatActivity() {
                 )
         }
 
-        binding.etLastName.editText?.doOnTextChanged { text, _, _, _ ->
+        binding.etFirstSurname.editText?.doOnTextChanged { text, _, _, _ ->
             areCorrectFieldsList[1] =
                 fieldNotEmpty(editsInputsList[1], text.toString(), 2) && fieldRegexName(
+                    editsInputsList[1],
+                    text.toString()
+                )
+        }
+        binding.etSecondSurname.editText?.doOnTextChanged { text, _, _, _ ->
+            areCorrectFieldsList[1] =
+                fieldRegexName(
                     editsInputsList[1],
                     text.toString()
                 )
