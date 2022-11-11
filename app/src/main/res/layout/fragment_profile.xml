@@ -47,7 +47,7 @@
                     android:layout_height="0dp"
                     app:icon="@drawable/ic_baseline_logout"
                     app:iconGravity="textStart"
-                    android:backgroundTint="@color/md_theme_light_secondary"
+                    android:backgroundTint="@color/md_theme_light_onErrorContainer"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/circleImageView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
