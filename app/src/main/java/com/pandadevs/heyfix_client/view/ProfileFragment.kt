@@ -20,12 +20,12 @@ import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import com.pandadevs.heyfix_client.data.model.UserGet
 import com.pandadevs.heyfix_client.databinding.FragmentProfileBinding
+import com.pandadevs.heyfix_client.utils.LoadingScreen
 import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
 import com.pandadevs.heyfix_client.utils.SnackbarShow
 import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
 import com.pandadevs.heyfix_client.utils.Validations.fieldRegexName
 import com.pandadevs.heyfix_client.viewmodel.ProfileViewModel
-import kotlin.math.log
 
 class ProfileFragment : Fragment() {
 
@@ -102,14 +102,12 @@ class ProfileFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.isDataProgress.observe(this) {
-            if (it) {
-                System.out.println("Loya: Loading...")
-            } else {
-                System.out.println("Loya: Done")
+            if(it){
+                LoadingScreen.show(requireContext(),"Cargando",false)
+            }else{
+                LoadingScreen.hide()
             }
             viewModel.result.observe(this) {
-
-                System.out.println("Loya°: Result: " + it.toString())
                 SharedPreferenceManager(requireContext()).saveUser(user)!!
                 Toast.makeText(context, "data updated", Toast.LENGTH_SHORT).show()
             }

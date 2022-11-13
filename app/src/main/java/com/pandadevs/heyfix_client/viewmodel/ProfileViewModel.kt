@@ -15,14 +15,11 @@ class ProfileViewModel : ViewModel() {
     var isDataProgress: MutableLiveData<Boolean> = MutableLiveData()
 
     fun updateUserData(user: UserGet) {
-        isDataProgress.value = true
         val response = ProfileProvider.updateUserData(user)
         if (response.resultType == ResultType.SUCCESS) {
             result.postValue(response.data!!)
-            isDataProgress.value = false
         } else {
             error.postValue(response.data!!)
-            isDataProgress.value = false
         }
     }
     fun updatePhotoUser(uri: Uri,user: UserGet) {
