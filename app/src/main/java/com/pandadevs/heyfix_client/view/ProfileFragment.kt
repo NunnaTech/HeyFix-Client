@@ -43,8 +43,8 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        editsInputsList = listOf(binding.etName, binding.etFirstSurname, binding.etPhone)
-        areCorrectFieldsList = mutableListOf(false, false, false)
+        editsInputsList = listOf(binding.etName, binding.etFirstSurname,binding.etSecondSurname, binding.etPhone)
+        areCorrectFieldsList = mutableListOf(false, true, false, false)
         binding.btnChangePass.setOnClickListener { goToActivity(ChangePasswordActivity::class.java) }
         binding.btnAbout.setOnClickListener { goToActivity(AboutActivity::class.java) }
         binding.btnSave.setOnClickListener { checkFields() }
@@ -56,7 +56,7 @@ class ProfileFragment : Fragment() {
         binding.btnProfilePicture.setOnClickListener { requestPermission() }
 
         // Get current data
-        user = SharedPreferenceManager(requireContext()).getUser()!!
+
 
         //  Load current data
         loadUserData()
@@ -64,8 +64,6 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         initObservers()
 
-        // update data
-        binding.btnSave.setOnClickListener { updateData() }
 
         // logout
         binding.btnLogout.setOnClickListener { logout() }
@@ -87,10 +85,15 @@ class ProfileFragment : Fragment() {
             viewModel.updatePhotoUser(imageUrl, user)
         }
         viewModel.updateUserData(user)
+        // update shared preferences
+        SharedPreferenceManager(requireContext()).saveUser(user)!!
+        loadUserData()
     }
 
     private fun loadUserData() {
         // Set data
+        user = SharedPreferenceManager(requireContext()).getUser()!!
+
         Glide.with(requireContext()).load(user.picture).into(binding.circleImageView)
         binding.txtUserName.text = user.name + " " + user.first_surname
         binding.etEmail.editText?.setText(user.email)
@@ -109,7 +112,7 @@ class ProfileFragment : Fragment() {
             }
             viewModel.result.observe(this) {
                 SharedPreferenceManager(requireContext()).saveUser(user)!!
-                Toast.makeText(context, "data updated", Toast.LENGTH_SHORT).show()
+
             }
         }
     }
@@ -138,11 +141,7 @@ class ProfileFragment : Fragment() {
         if (isGranted) {
             pickUpFromGallery()
         } else {
-            Toast.makeText(
-                requireContext(),
-                "Permisos denegados",
-                Toast.LENGTH_SHORT
-            ).show()
+            SnackbarShow.showSnackbar(binding.root, "Permisos denegados")
         }
     }
 
@@ -154,8 +153,6 @@ class ProfileFragment : Fragment() {
             imageUrl = data!!
             isNotEmpty = true
             binding.circleImageView.setImageURI(data)
-            System.out.println("Image-ll url: $imageUrl")
-            System.out.println("Image-ll data: $data")
         }
     }
 
@@ -168,6 +165,7 @@ class ProfileFragment : Fragment() {
     private fun checkFields() {
         if (areCorrectFieldsList.none { !it }) {
             SnackbarShow.showSnackbar(binding.root, "Guardado exitoso")
+            updateData()
         } else {
             editsInputsList.forEachIndexed { index, it ->
                 if (!areCorrectFieldsList[index]) it.error = "* Requerido"
@@ -192,15 +190,15 @@ class ProfileFragment : Fragment() {
                 )
         }
         binding.etSecondSurname.editText?.doOnTextChanged { text, _, _, _ ->
-            areCorrectFieldsList[1] =
+            areCorrectFieldsList[2] =
                 fieldRegexName(
-                    editsInputsList[1],
+                    editsInputsList[2],
                     text.toString()
                 )
         }
 
         binding.etPhone.editText?.doOnTextChanged { text, _, _, _ ->
-            areCorrectFieldsList[2] = fieldNotEmpty(editsInputsList[2], text.toString(), 10)
+            areCorrectFieldsList[3] = fieldNotEmpty(editsInputsList[3], text.toString(), 10)
         }
 
     }
@@ -208,6 +206,4 @@ class ProfileFragment : Fragment() {
     private fun goToActivity(cls: Class<*>) {
         activity?.startActivity(Intent(context, cls))
     }
-
-
 }

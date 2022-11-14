@@ -45,9 +45,9 @@
                     android:id="@+id/btnLogout"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
+                    android:backgroundTint="@color/md_theme_light_tertiary"
                     app:icon="@drawable/ic_baseline_logout"
                     app:iconGravity="textStart"
-                    android:backgroundTint="@color/md_theme_light_tertiary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/circleImageView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -90,6 +90,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/strEditProfile"
                         android:textSize="@dimen/dimenText" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
@@ -107,9 +108,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress"
-                            android:maxLength="50"
-                            />
+                            android:maxLength="50" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etName"
                         android:layout_width="match_parent"
@@ -130,7 +131,6 @@
                             android:maxLength="50" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etFirstSurname"
                         android:layout_width="match_parent"
@@ -150,7 +150,8 @@
                             android:inputType="text"
                             android:maxLength="50" />
                     </com.google.android.material.textfield.TextInputLayout>
- <com.google.android.material.textfield.TextInputLayout
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/etSecondSurname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -196,9 +197,9 @@
 
             <Button
                 android:id="@+id/btnSave"
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:text="@string/strSaveChanges" />
 
             <Button
