@@ -4,12 +4,8 @@
     package="com.pandadevs.heyfix_client">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
 
     <application
         android:allowBackup="true"
@@ -39,10 +35,13 @@
 
         <activity
             android:name=".view.MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:exported="true"
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -51,6 +50,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.ChatActivity"
             android:exported="false"
@@ -68,9 +71,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.LoadingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.RegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".view.AboutActivity"
             android:exported="false"
@@ -83,9 +91,6 @@
             android:name=".view.ChangePasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.SplashActivity"
-            android:exported="true"></activity>
     </application>
 
 </manifest>
