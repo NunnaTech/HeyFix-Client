@@ -60,7 +60,8 @@
     <string name="strDescription">Por favor, llena los siguientes campos:</string>
     <string name="strRegisterWithGoogle">Registrate con Google</string>
     <string name="strName">Nombre</string>
-    <string name="strLastname">Apellidos</string>
+    <string name="strFistSurname">Primer Apellido</string>
+    <string name="strSecondSurname">Segundo Apellido</string>
 
     <!--  Request service Activity  -->
     <string name="strServiceInProgress">Servicio en proceso</string>
