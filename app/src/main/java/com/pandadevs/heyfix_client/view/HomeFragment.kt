@@ -22,7 +22,6 @@ class HomeFragment : Fragment(), CategoryAdapter.MyEvents {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
     private var adapter: CategoryAdapter? = null
     private lateinit var viewModel: CategoryViewModel
 

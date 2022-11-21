@@ -1,13 +1,16 @@
 package com.pandadevs.heyfix_client.view
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.core.app.ActivityCompat
 import com.pandadevs.heyfix_client.databinding.ActivitySplashBinding
 import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
+import com.pandadevs.heyfix_client.utils.SnackbarShow
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -24,5 +27,6 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }, 2000)
     }
+
 
 }

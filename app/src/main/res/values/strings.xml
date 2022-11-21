@@ -60,20 +60,22 @@
     <string name="strDescription">Por favor, llena los siguientes campos:</string>
     <string name="strRegisterWithGoogle">Registrate con Google</string>
     <string name="strName">Nombre</string>
-    <string name="strLastname">Apellidos</string>
+    <string name="strFistSurname">Primer Apellido</string>
+    <string name="strSecondSurname">Segundo Apellido</string>
 
     <!--  Request service Activity  -->
     <string name="strServiceInProgress">Servicio en proceso</string>
     <string name="strGoToChat">Ir al chat</string>
     <string name="strCancelService">Cancelar servicio</string>
 
-    <!--  Ubication Activity  -->
-    <string name="strUbicationAppBar">Ubicación</string>
-    <string name="strImHere">Estoy aquí</string>
+    <!--  Maps Activity  -->
+    <string name="strServiceSelected">Servicio seleccionado: </string>
+    <string name="strDirection">Dirección</string>
+    <string name="strSearchThisDirection">Buscar esta dirección</string>
+    <string name="strHiredService">Contratar servicio</string>
 
     <!--   Profile Fragment-->
     <string name="strPhone">Teléfono</string>
     <string name="title_activity_maps">MapsActivity</string>
-
 
 </resources>

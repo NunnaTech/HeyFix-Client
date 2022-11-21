@@ -37,14 +37,43 @@
             android:textColor="@color/md_theme_light_primary"
             android:textSize="@dimen/dimenTitle"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Para la dirección: "
+            android:textColor="@color/SoftlyBlack"
+            android:textSize="@dimen/dimenText" />
+
+        <TextView
+            android:id="@+id/tvDirection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text=""
+            android:textColor="@color/md_theme_light_secondary"
+            android:textSize="@dimen/dimenText"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:gravity="center"
         android:src="@drawable/loading"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelService"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <Button
+        android:id="@+id/btnCancelService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimenScreenPadding"
+        android:backgroundTint="@color/md_theme_light_tertiary"
+        android:text="Cancelar servicio"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
