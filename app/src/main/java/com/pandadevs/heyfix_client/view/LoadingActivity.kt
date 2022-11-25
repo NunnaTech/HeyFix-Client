@@ -2,6 +2,7 @@ package com.pandadevs.heyfix_client.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pandadevs.heyfix_client.data.model.CategoryModel
 import com.pandadevs.heyfix_client.data.model.MyGeocoder
@@ -30,8 +31,11 @@ class LoadingActivity : AppCompatActivity() {
         binding.tvDirection.text = myGeocoder.address
         binding.tvCategory.text = myCategoryModel.name
         binding.btnCancelService.setOnClickListener { confirmCancelService() }
-        RequestServiceProvider.searchRequestService(myCategoryModel, myGeocoder)
+        lifecycleScope.launch {
+            RequestServiceProvider.searchRequestService(myCategoryModel, myGeocoder)
+        }
     }
+
 
 
 
