@@ -11,13 +11,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.Timestamp
 import com.pandadevs.heyfix_client.data.model.UserGet
 import com.pandadevs.heyfix_client.databinding.FragmentProfileBinding
 import com.pandadevs.heyfix_client.utils.LoadingScreen
@@ -43,31 +44,28 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        editsInputsList = listOf(binding.etName, binding.etFirstSurname,binding.etSecondSurname, binding.etPhone)
+        editsInputsList =
+            listOf(binding.etName, binding.etFirstSurname, binding.etSecondSurname, binding.etPhone)
         areCorrectFieldsList = mutableListOf(false, true, false, false)
         binding.btnChangePass.setOnClickListener { goToActivity(ChangePasswordActivity::class.java) }
         binding.btnAbout.setOnClickListener { goToActivity(AboutActivity::class.java) }
         binding.btnSave.setOnClickListener { checkFields() }
         activeEventListenerOnEditText()
-        // viewModel
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-
-        // change profile picture
         binding.btnProfilePicture.setOnClickListener { requestPermission() }
-
-        // Get current data
-
-
-        //  Load current data
         loadUserData()
-
-        // Inflate the layout for this fragment
         initObservers()
-
-
-        // logout
-        binding.btnLogout.setOnClickListener { logout() }
+        binding.btnLogout.setOnClickListener { confirmCancelService() }
         return binding.root
+    }
+
+    private fun confirmCancelService() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("¿Cerrar sesión?")
+            .setMessage("Se te mandará a la pantalla de iniciar sesión")
+            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton("Sí, cerrar sesión") { _, _ -> logout() }
+            .show()
     }
 
     private fun logout() {
@@ -85,17 +83,14 @@ class ProfileFragment : Fragment() {
             viewModel.updatePhotoUser(imageUrl, user)
         }
         viewModel.updateUserData(user)
-        // update shared preferences
-        SharedPreferenceManager(requireContext()).saveUser(user)!!
+        SharedPreferenceManager(requireContext()).saveUser(user)
         loadUserData()
     }
 
     private fun loadUserData() {
-        // Set data
         user = SharedPreferenceManager(requireContext()).getUser()!!
-
         Glide.with(requireContext()).load(user.picture).into(binding.circleImageView)
-        binding.txtUserName.text = user.name + " " + user.first_surname
+        binding.txtUserName.text = "${user.name} ${user.first_surname}"
         binding.etEmail.editText?.setText(user.email)
         binding.etName.editText?.setText(user.name)
         binding.etFirstSurname.editText?.setText(user.first_surname)
@@ -105,14 +100,13 @@ class ProfileFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.isDataProgress.observe(this) {
-            if(it){
-                LoadingScreen.show(requireContext(),"Cargando",false)
-            }else{
+            if (it) {
+                LoadingScreen.show(requireContext(), "Espere", false)
+            } else {
                 LoadingScreen.hide()
             }
             viewModel.result.observe(this) {
                 SharedPreferenceManager(requireContext()).saveUser(user)!!
-
             }
         }
     }
@@ -137,7 +131,6 @@ class ProfileFragment : Fragment() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-
         if (isGranted) {
             pickUpFromGallery()
         } else {

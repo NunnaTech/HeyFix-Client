@@ -12,11 +12,11 @@ class ProfileProvider {
     companion object {
         suspend fun updateProfile(imageUri: Uri, user: UserGet): Result<String> {
             val url = uploadUserImage(imageUri)
-            if (url != null){
+            if (url != null) {
                 user.picture = url.toString()
                 updateUserData(user)
                 return Result.success("data updated")
-            }else{
+            } else {
                 return Result.error("error")
             }
         }
@@ -40,11 +40,9 @@ class ProfileProvider {
             val imageFileName = "profile-picture/${System.currentTimeMillis()}.png"
             FirebaseStorage.getInstance().reference.child(imageFileName).putFile(imageUri)
                 .addOnSuccessListener {
-                    // Get download URL
                     FirebaseStorage.getInstance().reference.child(imageFileName).downloadUrl
                         .addOnCompleteListener { url ->
                             def.complete(if (url.isSuccessful) url.result.toString() else null)
-
                         }
                 }
             return def.await()

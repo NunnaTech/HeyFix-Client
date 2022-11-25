@@ -34,9 +34,7 @@ class CategoryAdapter(private val myEvents: MyEvents, context: Context) :
         fun bind(element: CategoryModel, position: Int) = with(binding) {
             Glide.with(globalContext).load(element.icon).into(binding.imIcon)
             binding.tvName.text = element.name
-            binding.cvCategory.setOnClickListener {
-                this@CategoryAdapter.myEvents.onClick(element)
-            }
+            binding.cvCategory.setOnClickListener { this@CategoryAdapter.myEvents.onClick(element) }
         }
     }
 

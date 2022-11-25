@@ -25,7 +25,6 @@ class AboutActivity : AppCompatActivity() {
             Member(name = "Raúl Genaro Adame Najera", role = "Desarrollador Móvil", image = R.drawable.img_raul),
             Member(name = "Hector Saldaña Espinoza", role = "Desarrollador Móvil", image = R.drawable.img_hector),
         )
-
         adapter = AdapterMember(list, this)
         binding.rvMembers.layoutManager = LinearLayoutManager(this)
         binding.rvMembers.adapter = adapter

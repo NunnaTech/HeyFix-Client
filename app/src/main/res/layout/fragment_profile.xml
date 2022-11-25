@@ -34,7 +34,7 @@
                 <Button
                     android:id="@+id/btnProfilePicture"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:icon="@drawable/ic_add_image"
                     app:iconGravity="textStart"
                     app:layout_constraintBottom_toBottomOf="parent"

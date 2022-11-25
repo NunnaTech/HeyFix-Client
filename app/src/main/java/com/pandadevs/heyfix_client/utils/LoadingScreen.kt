@@ -9,24 +9,21 @@ import android.widget.TextView
 import com.pandadevs.heyfix_client.R
 
 object LoadingScreen {
-    var dialog:Dialog? = null
+    var dialog: Dialog? = null
 
-    fun show(context: Context,message:String,cancelable:Boolean){
-        System.out.println("Loya: LoadingScreen.show")
+    fun show(context: Context, message: String, cancelable: Boolean) {
         dialog = Dialog(context)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog!!.setContentView(R.layout.dialog)
-        dialog!!
-            .window!!
-            .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog!!.setCancelable(cancelable)
-        var label = dialog!!.findViewById<TextView>(R.id.label)
-        label.setText(message)
+        val label = dialog!!.findViewById<TextView>(R.id.tvLabel)
+        label.text = message
         dialog!!.show()
     }
 
-    fun hide(){
-        if(dialog != null){
+    fun hide() {
+        if (dialog != null) {
             dialog!!.dismiss()
         }
     }

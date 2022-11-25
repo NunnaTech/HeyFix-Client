@@ -5,17 +5,13 @@ import kotlinx.coroutines.CompletableDeferred
 
 class LoginProvider {
     companion object{
-        suspend fun LoginWithEmail(email:String,password:String):Boolean?{
+        suspend fun loginWithEmail(email:String,password:String):Boolean?{
             val response = CompletableDeferred<Boolean?>()
             FirebaseAuth
                 .getInstance()
                 .signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener{
-                    if (it.isSuccessful){
-                        response.complete(true)
-                    }else{
-                        response.complete(false)
-                    }
+                    response.complete(it.isSuccessful)
                 }
             return response.await()
         }
