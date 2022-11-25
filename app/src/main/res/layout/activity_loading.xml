@@ -50,7 +50,23 @@
             android:id="@+id/tvDirection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:text=""
+            android:textColor="@color/Accent"
+            android:textSize="@dimen/dimenText"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Servicio: "
+            android:textColor="@color/SoftlyBlack"
+            android:textSize="@dimen/dimenText" />
+
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text=""
             android:textColor="@color/md_theme_light_secondary"
             android:textSize="@dimen/dimenText"

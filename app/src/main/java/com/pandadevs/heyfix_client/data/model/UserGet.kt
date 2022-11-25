@@ -16,5 +16,7 @@ data class UserGet(
     var ranked_avg: Double,
     var transport: String,
     var category_id: String,
+    var last_online: Timestamp?,
+    var current_position: GeoPoint?,
     var tokenNotification: String
 )

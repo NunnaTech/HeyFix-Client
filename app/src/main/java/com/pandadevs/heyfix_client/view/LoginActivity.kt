@@ -136,6 +136,8 @@ class LoginActivity : AppCompatActivity() {
                     parseDouble(documents.documents[0].data!!["ranked_avg"].toString()),
                     documents.documents[0].data!!["transport"].toString(),
                     documents.documents[0].data!!["category_id"].toString(),
+                    null,
+                    null,
                     documents.documents[0].data!!["tokenNotification"].toString(),
                 )
                 SharedPreferenceManager(this).saveUser(user)

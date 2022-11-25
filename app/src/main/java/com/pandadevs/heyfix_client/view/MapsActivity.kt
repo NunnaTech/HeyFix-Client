@@ -99,7 +99,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
     override fun onMapReady(googleMap: GoogleMap) {
         val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val locationProvider = LocationManager.NETWORK_PROVIDER
@@ -113,17 +112,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         if (!::mMap.isInitialized) return
         if (isLocationPermissionGranted()) {
-
             mMap.isMyLocationEnabled = true
             @SuppressLint("MissingPermission")
             val lastKnownLocation = locationManager.getLastKnownLocation(locationProvider)
             currentUserLocation = LatLng(lastKnownLocation!!.latitude, lastKnownLocation.longitude)
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLocation, 17f))
             cameraListener()
-            UserLastProvider.setLastCurrentPosition(
-                this,
-                GeoPoint(currentUserLocation.latitude, currentUserLocation.longitude)
-            )
+            UserLastProvider.setLastCurrentPosition(this, GeoPoint(currentUserLocation.latitude, currentUserLocation.longitude))
             binding.btnSearchDirection.setOnClickListener { searchByAddress() }
             binding.btnSaveUbication.setOnClickListener { saveUbication() }
         } else {
@@ -157,7 +152,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
             }
-
         }
     }
 
@@ -192,6 +186,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun saveUbication() {
         val intent = Intent(this, LoadingActivity::class.java)
         intent.putExtra(LoadingActivity.UBICATION_SELECTED, ubicationSelected)
+        intent.putExtra(LoadingActivity.CATEGORY_SELECTED, categoryModel)
         startActivity(intent)
     }
 
