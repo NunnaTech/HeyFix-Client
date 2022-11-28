@@ -53,7 +53,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         isLocationPermissionGranted()
         requestLocationPermission()
         categoryModel = intent.getSerializableExtra(CATEGORY) as CategoryModel
-        binding.tvCategory.text = categoryModel.name
+        binding.tvCategory.text = " ${categoryModel.name}"
         binding.tbApp.setNavigationOnClickListener { finish() }
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -118,7 +118,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             currentUserLocation = LatLng(lastKnownLocation!!.latitude, lastKnownLocation.longitude)
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLocation, 17f))
             cameraListener()
-            UserLastProvider.setLastCurrentPosition(this, GeoPoint(currentUserLocation.latitude, currentUserLocation.longitude))
+            UserLastProvider.setLastCurrentPosition(
+                this,
+                GeoPoint(currentUserLocation.latitude, currentUserLocation.longitude)
+            )
             binding.btnSearchDirection.setOnClickListener { searchByAddress() }
             binding.btnSaveUbication.setOnClickListener { saveUbication() }
         } else {
@@ -184,10 +187,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun saveUbication() {
-        val intent = Intent(this, LoadingActivity::class.java)
-        intent.putExtra(LoadingActivity.UBICATION_SELECTED, ubicationSelected)
-        intent.putExtra(LoadingActivity.CATEGORY_SELECTED, categoryModel)
-        startActivity(intent)
+        if (binding.etDirections.text.isNullOrEmpty()) {
+            SnackbarShow.showSnackbar(binding.root, "Espere a que cargue la dirección")
+        } else {
+            val intent = Intent(this, LoadingActivity::class.java)
+            intent.putExtra(LoadingActivity.UBICATION_SELECTED, ubicationSelected)
+            intent.putExtra(LoadingActivity.CATEGORY_SELECTED, categoryModel)
+            startActivity(intent)
+        }
+
     }
 
     private fun setOnAutoComplete(list: List<String>) {

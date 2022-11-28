@@ -7,7 +7,7 @@
     tools:context=".view.LoadingActivity">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/linearProgressIndicator"
+        android:id="@+id/lProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
@@ -20,9 +20,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/dimenScreenPadding"
-        app:layout_constraintTop_toBottomOf="@+id/linearProgressIndicator">
+        app:layout_constraintTop_toBottomOf="@+id/lProgress">
 
         <TextView
+            android:id="@+id/tvLookingFor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Buscando a un"
@@ -74,6 +75,7 @@
     </LinearLayout>
 
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/givLoading"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
