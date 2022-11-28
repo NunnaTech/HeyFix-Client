@@ -60,7 +60,7 @@ class LoadingActivity : AppCompatActivity() {
         }
         viewModel.result.observe(this) {
             if (it.isNotEmpty()) {
-                goToRequestServiceActivity(it.toString())
+                goToRequestServiceActivity(it)
             }else{
                 workerNotFound()
             }
