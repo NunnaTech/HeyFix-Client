@@ -3,7 +3,6 @@ package com.pandadevs.heyfix_client.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +14,6 @@ import com.pandadevs.heyfix_client.data.model.UserSort
 import com.pandadevs.heyfix_client.databinding.ActivityLoadingBinding
 import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
 import com.pandadevs.heyfix_client.viewmodel.RequestServiceViewModel
-import kotlinx.android.synthetic.main.item_history_service.view.*
 import kotlinx.coroutines.launch
 
 class LoadingActivity : AppCompatActivity() {
@@ -90,6 +88,7 @@ class LoadingActivity : AppCompatActivity() {
             viewModel.waitForResponse(userId, myGeocoder, users)
         }
     }
+
 
     private fun confirmCancelService() {
         MaterialAlertDialogBuilder(this)

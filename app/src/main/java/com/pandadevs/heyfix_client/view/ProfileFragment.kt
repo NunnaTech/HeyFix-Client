@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.Timestamp
 import com.pandadevs.heyfix_client.data.model.UserGet
 import com.pandadevs.heyfix_client.databinding.FragmentProfileBinding
 import com.pandadevs.heyfix_client.utils.LoadingScreen
@@ -80,11 +80,10 @@ class ProfileFragment : Fragment() {
         user.second_surname = binding.etSecondSurname.editText?.text.toString()
         user.phone_number = binding.etPhone.editText?.text.toString()
         if (isNotEmpty) {
-            viewModel.updatePhotoUser(imageUrl, user)
+            viewModel.updatePhotoUser(imageUrl, user).toString()
         }
         viewModel.updateUserData(user)
-        SharedPreferenceManager(requireContext()).saveUser(user)
-        loadUserData()
+
     }
 
     private fun loadUserData() {
@@ -107,6 +106,12 @@ class ProfileFragment : Fragment() {
             }
             viewModel.result.observe(this) {
                 SharedPreferenceManager(requireContext()).saveUser(user)!!
+                loadUserData()
+            }
+            viewModel.url.observe(this) {
+                user.picture = it
+                SharedPreferenceManager(requireContext()).saveUser(user)
+                loadUserData()
             }
         }
     }

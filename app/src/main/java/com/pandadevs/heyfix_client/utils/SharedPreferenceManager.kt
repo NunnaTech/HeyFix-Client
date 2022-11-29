@@ -17,7 +17,7 @@ class SharedPreferenceManager(val context: Context) {
         sharedPref.edit().putBoolean("active",true).apply()
     }
 
-    fun getSession():Boolean?{
+    fun getSession():Boolean{
         return sharedPref.getBoolean("active", false)
     }
 

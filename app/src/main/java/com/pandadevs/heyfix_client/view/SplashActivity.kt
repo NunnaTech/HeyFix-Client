@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.pandadevs.heyfix_client.databinding.ActivitySplashBinding
 import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
@@ -22,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         Handler().postDelayed({
             val active = SharedPreferenceManager(this).getSession()
-            if (active!!) startActivity(Intent(this, MainActivity::class.java))
+            if (active) startActivity(Intent(this, MainActivity::class.java))
             else startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }, 2000)
