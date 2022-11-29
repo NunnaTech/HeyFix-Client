@@ -19,6 +19,7 @@ import com.google.firebase.firestore.GeoPoint
 import com.pandadevs.heyfix_client.R
 import com.pandadevs.heyfix_client.data.model.UserPost
 import com.pandadevs.heyfix_client.databinding.ActivityRegisterBinding
+import com.pandadevs.heyfix_client.utils.LoadingScreen
 import com.pandadevs.heyfix_client.utils.SnackbarShow
 import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
 import com.pandadevs.heyfix_client.utils.Validations.fieldRegexEmail
@@ -74,6 +75,7 @@ class RegisterActivity : AppCompatActivity() {
             if (binding.etNewPassword.editText?.text.toString()
                 == binding.etRepeatNewPassword.editText?.text.toString()
             ) {
+                LoadingScreen.show(this,"Registrando usuario...",false)
                 val name = binding.etName.editText?.text.toString()
                 val firstSurname = binding.etFirstSurname.editText?.text.toString()
                 val secondSurname = binding.etSecondSurname.editText?.text.toString()
@@ -94,6 +96,7 @@ class RegisterActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     viewModel.registerData(user, binding.etNewPassword.editText?.text.toString())
                 }
+                LoadingScreen.hide()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {
@@ -177,6 +180,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
     fun registerWithGoogle(user: UserPost) {
+        LoadingScreen.show(this,"Registrando usuario...",false)
         FirebaseFirestore
             .getInstance()
             .collection("users")
@@ -184,10 +188,12 @@ class RegisterActivity : AppCompatActivity() {
             .set(user)
             .addOnSuccessListener {
                 SnackbarShow.showSnackbar(binding.root, "Registro Exitoso")
+                LoadingScreen.hide()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
             .addOnFailureListener {
+                LoadingScreen.hide()
                 SnackbarShow.showSnackbar(binding.root, "El Registro de Datos fue Invalido")
             }
     }

@@ -13,6 +13,14 @@ class SharedPreferenceManager(val context: Context) {
         sharedPref.edit().putString("user", Gson().toJson(user)).apply()
     }
 
+    fun saveProviderMail(provider:String){
+        sharedPref.edit().putString("provider",provider);
+    }
+
+    fun saveUID(id:String){
+        sharedPref.edit().putString("uid",id);
+    }
+
     fun saveSession(){
         sharedPref.edit().putBoolean("active",true).apply()
     }
