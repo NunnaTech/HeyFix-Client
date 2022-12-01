@@ -72,6 +72,15 @@
             android:textColor="@color/md_theme_light_secondary"
             android:textSize="@dimen/dimenText"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tvTimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="0"
+            android:textColor="@color/md_theme_light_tertiary"
+            android:textSize="@dimen/dimenNormalText" />
     </LinearLayout>
 
     <pl.droidsonroids.gif.GifImageView

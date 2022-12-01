@@ -3,6 +3,7 @@ package com.pandadevs.heyfix_client.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,7 @@ import com.pandadevs.heyfix_client.data.model.CategoryModel
 import com.pandadevs.heyfix_client.data.model.MyGeocoder
 import com.pandadevs.heyfix_client.data.model.UserSort
 import com.pandadevs.heyfix_client.databinding.ActivityLoadingBinding
+import com.pandadevs.heyfix_client.provider.RequestServiceProvider
 import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
 import com.pandadevs.heyfix_client.viewmodel.RequestServiceViewModel
 import kotlinx.coroutines.launch
@@ -46,6 +48,27 @@ class LoadingActivity : AppCompatActivity() {
         binding.tvCategory.text = myCategoryModel.name
         binding.btnCancelService.setOnClickListener { confirmCancelService() }
         lifecycleScope.launch { viewModel.searchRequestService(myCategoryModel, myGeocoder) }
+
+        object : CountDownTimer(30000, 1000) {
+            override fun onTick(p0: Long) {
+                binding.tvTimer.text = "Esperando: ${(p0 / 1000)} segundos"
+            }
+
+            override fun onFinish() {
+                binding.tvTimer.text = "Tiempo de espera terminado"
+                if (viewModel.result.value == null) {
+                    viewModel.result.value = ""
+                    deleteRequests()
+                }
+            }
+        }.start()
+    }
+
+
+    private fun deleteRequests() {
+        lifecycleScope.launch {
+            RequestServiceProvider.deleteRequests(userId)
+        }
     }
 
     private fun initObservers() {
@@ -59,8 +82,9 @@ class LoadingActivity : AppCompatActivity() {
         viewModel.result.observe(this) {
             if (it.isNotEmpty()) {
                 goToRequestServiceActivity(it)
-            }else{
+            } else {
                 workerNotFound()
+                deleteRequests()
             }
         }
     }
@@ -95,7 +119,12 @@ class LoadingActivity : AppCompatActivity() {
             .setTitle("¿Cancelar servicio?")
             .setMessage("Se eliminará la solicitud de tu servicio")
             .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton("Sí, cancelar") { _, _ -> finish() }
+            .setPositiveButton("Sí, cancelar") { _, _ -> onCancelServiceRequest() }
             .show()
+    }
+
+    private fun onCancelServiceRequest(){
+        deleteRequests()
+        finish()
     }
 }

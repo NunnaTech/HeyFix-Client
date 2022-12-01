@@ -6,14 +6,23 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.pandadevs.heyfix_client.data.model.*
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 
 class RequestServiceProvider {
     companion object {
 
         private var numberOfRequest = 0
         private var numberOfUsers = 0
+
+
+        fun deleteRequests(userId: String) {
+            FirebaseFirestore
+                .getInstance()
+                .collection("request_service").whereEqualTo("client_id", userId).get()
+                .addOnSuccessListener {
+                    it.forEach { r -> r.reference.delete() }
+                }
+        }
 
         suspend fun searchRequestService(
             categoryModel: CategoryModel,
@@ -51,7 +60,6 @@ class RequestServiceProvider {
                 }
                 .addOnFailureListener {
                     response.complete(mutableListOf())
-                    Log.e("REQUEST_ERROR", it.message.toString())
                 }
             return response.await()
         }
@@ -83,7 +91,7 @@ class RequestServiceProvider {
                         to = user.user.tokenNotification,
                         data = hashMapOf(
                             "id" to idRequestService.await(),
-                            "title" to "Tienes una nueva solicitud de servicio",
+                            "title" to "Nueva solicitud de servicio",
                             "address" to myGeocoder.address,
                             "client_id" to userId,
                             "worker_id" to user.user.id,
@@ -112,11 +120,13 @@ class RequestServiceProvider {
                                 if (this@Companion.numberOfRequest == this@Companion.numberOfUsers) {
                                     idRequestAccepted.complete("")
                                 }
+
+
                             }
                         }
                     }
             }
-            return  idRequestAccepted.await()
+            return idRequestAccepted.await()
         }
     }
 
