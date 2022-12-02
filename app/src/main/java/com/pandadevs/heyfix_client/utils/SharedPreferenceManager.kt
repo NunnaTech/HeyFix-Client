@@ -14,11 +14,11 @@ class SharedPreferenceManager(val context: Context) {
     }
 
     fun saveProviderMail(provider:String){
-        sharedPref.edit().putString("provider",provider);
+        sharedPref.edit().putString("provider",provider).apply();
     }
 
     fun saveUID(id:String){
-        sharedPref.edit().putString("uid",id);
+        sharedPref.edit().putString("uid",id).apply();
     }
 
     fun saveSession(){

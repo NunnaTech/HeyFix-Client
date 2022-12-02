@@ -143,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
                     null,
                     documents.documents[0].data!!["tokenNotification"].toString(),
                 )
-                SharedPreferenceManager(applicationContext).saveProviderMail("Mail")
+                SharedPreferenceManager(applicationContext).saveProviderMail(method)
                 SharedPreferenceManager(this).saveUID(FirebaseAuth.getInstance().currentUser!!.uid)
                 SharedPreferenceManager(this).saveUser(user)
                 SharedPreferenceManager(this).saveSession()
@@ -184,8 +184,6 @@ class LoginActivity : AppCompatActivity() {
                         .signInWithCredential(credenciales)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                SharedPreferenceManager(applicationContext).saveProviderMail("Google")
-                                SharedPreferenceManager(applicationContext).saveUID(FirebaseAuth.getInstance().currentUser!!.uid)
                                 getDataToPreferences("google", account.email)
                             } else {
                                 LoadingScreen.hide()
