@@ -141,7 +141,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val addresses = geocoder.getFromLocationName(address, 1)
                 runOnUiThread {
                     try {
-                        if (addresses.size > 0) {
+                        if (addresses!!.size > 0) {
                             val firstAddress = addresses[0]
                             ubicationSelected.address = address
                             ubicationSelected.latitude = firstAddress.latitude
@@ -170,7 +170,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         CoroutineScope(Dispatchers.IO).launch {
             val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
             val addresses = geocoder.getFromLocation(lat, long, 3)
-            if (addresses.size > 0) {
+            if (addresses!!.size > 0) {
                 ubicationSelected.address = addresses[0].getAddressLine(0)
                 ubicationSelected.latitude = lat
                 ubicationSelected.longitude = long

@@ -45,7 +45,7 @@ class RequestServiceProvider {
                             current_position = u.data["current_position"] as? GeoPoint,
                             email = u.data["email"].toString(),
                             first_surname = u.data["first_surname"].toString(),
-                            last_online = u.data["last_online"] as? Timestamp,
+                            last_online = u.data["last_online"] as Timestamp,
                             name = u.data["name"].toString(),
                             phone_number = u.data["phone_number"].toString(),
                             picture = u.data["picture"].toString(),

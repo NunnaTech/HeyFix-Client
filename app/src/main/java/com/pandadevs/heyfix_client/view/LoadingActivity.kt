@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -49,7 +50,7 @@ class LoadingActivity : AppCompatActivity() {
         binding.btnCancelService.setOnClickListener { confirmCancelService() }
         lifecycleScope.launch { viewModel.searchRequestService(myCategoryModel, myGeocoder) }
 
-        object : CountDownTimer(30000, 1000) {
+        object : CountDownTimer(60000, 1000) {
             override fun onTick(p0: Long) {
                 binding.tvTimer.text = "Esperando: ${(p0 / 1000)} segundos"
             }
@@ -96,14 +97,10 @@ class LoadingActivity : AppCompatActivity() {
     }
 
     private fun workerNotFound() {
-        binding.lProgress.visibility = android.view.View.GONE
+        binding.tvTimer.visibility = View.GONE
+        binding.lProgress.visibility = View.GONE
         binding.tvLookingFor.text = "No se encontró a ningún"
-        binding.tvLookingFor.setTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.md_theme_light_tertiary
-            )
-        )
+        binding.tvLookingFor.setTextColor(ContextCompat.getColor(this, R.color.md_theme_light_tertiary))
         binding.givLoading.setImageResource(R.drawable.not_found)
     }
 
@@ -123,7 +120,7 @@ class LoadingActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun onCancelServiceRequest(){
+    private fun onCancelServiceRequest() {
         deleteRequests()
         finish()
     }
