@@ -37,4 +37,5 @@
 
     <!--  Custom colors:  -->
     <color name="Accent">#00AC1C</color>
+    <color name="Accent_onSurface">#EBFFEE</color>
 </resources>

@@ -65,7 +65,9 @@
 
     <!--  Request service Activity  -->
     <string name="strServiceInProgress">Servicio en proceso</string>
-    <string name="strGoToChat">Ir al chat</string>
+    <string name="strGoToChat">Chat</string>
+    <string name="strGoToCall">Llamar</string>
+    <string name="strGoToMap">Mapa</string>
     <string name="strCancelService">Cancelar servicio</string>
 
     <!--  Maps Activity  -->

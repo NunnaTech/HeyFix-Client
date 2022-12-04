@@ -92,7 +92,7 @@ class LoadingActivity : AppCompatActivity() {
 
     private fun goToRequestServiceActivity(hired_service: String) {
         val intent = Intent(this, RequestServiceActivity::class.java)
-        intent.putExtra(RequestServiceActivity.HIRED_SERVICE, hired_service)
+        intent.putExtra(RequestServiceActivity.ID_SERVICE_HIRED, hired_service)
         startActivity(intent)
     }
 

@@ -83,7 +83,8 @@ class RequestServiceProvider {
                             "address" to myGeocoder.address,
                             "client_id" to userId,
                             "worker_id" to user.user.id,
-                        )
+                            "client_ubication" to GeoPoint(myGeocoder.latitude, myGeocoder.longitude)
+                            )
                     ).addOnSuccessListener { reference -> idRequestService.complete(reference.id) }
 
                 RetrofitProvider.sendNotification(
@@ -95,6 +96,8 @@ class RequestServiceProvider {
                             "address" to myGeocoder.address,
                             "client_id" to userId,
                             "worker_id" to user.user.id,
+                            "client_latitude" to myGeocoder.latitude.toString(),
+                            "client_longitude" to myGeocoder.longitude.toString(),
                         )
                     )
                 )
@@ -120,8 +123,6 @@ class RequestServiceProvider {
                                 if (this@Companion.numberOfRequest == this@Companion.numberOfUsers) {
                                     idRequestAccepted.complete("")
                                 }
-
-
                             }
                         }
                     }
