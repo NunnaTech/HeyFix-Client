@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnRate"
+        app:layout_constraintBottom_toTopOf="@+id/btnSkip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ablAPp">
@@ -51,7 +51,7 @@
                 android:padding="15dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img"
+                    android:id="@+id/civPicture"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:src="@drawable/loading_profile" />
@@ -64,7 +64,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lines="1"
-                    android:text="Hector Saldaña Espinoza"
+                    android:text="Cargando..."
                     android:textColor="@color/md_theme_light_primary"
                     android:textSize="@dimen/dimenSubTitle"
                     android:textStyle="bold" />
@@ -80,14 +80,15 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/ilus_star" />
+                        android:src="@drawable/ilus_service" />
 
                     <TextView
+                        android:id="@+id/tvCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="Electricidad"
+                        android:text="Cargando servicio..."
                         android:textSize="@dimen/dimenText" />
 
                 </LinearLayout>
@@ -105,16 +106,14 @@
                         android:src="@drawable/ilus_transport" />
 
                     <TextView
+                        android:id="@+id/tvTransport"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:lines="1"
-                        android:text="Camión"
+                        android:text="Cargando transporte..."
                         android:textSize="@dimen/dimenText" />
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -124,61 +123,95 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/ibtnStar1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star_border" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etReview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:hint="@string/strTypeReview"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:endIconMode="clear_text">
 
-            <ImageButton
-                android:id="@+id/ibtnStar2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star_border" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="50" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageButton
-                android:id="@+id/ibtnStar3"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star_border" />
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/ibtnStar4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star_border" />
+                <ImageButton
+                    android:id="@+id/ibtnStar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/md_theme_light_surface"
+                    android:src="@drawable/ic_star_border" />
 
-            <ImageButton
-                android:id="@+id/ibtnStar5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:backgroundTint="@color/md_theme_light_surface"
-                android:src="@drawable/ic_star_border" />
+                <ImageButton
+                    android:id="@+id/ibtnStar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/md_theme_light_surface"
+                    android:src="@drawable/ic_star_border" />
+
+                <ImageButton
+                    android:id="@+id/ibtnStar3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/md_theme_light_surface"
+                    android:src="@drawable/ic_star_border" />
+
+                <ImageButton
+                    android:id="@+id/ibtnStar4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/md_theme_light_surface"
+                    android:src="@drawable/ic_star_border" />
+
+                <ImageButton
+                    android:id="@+id/ibtnStar5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/md_theme_light_surface"
+                    android:src="@drawable/ic_star_border" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnSkip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimenScreenPadding"
+        android:backgroundTint="@color/md_theme_light_outline"
+        android:text="@string/strSkip"
+        app:layout_constraintBottom_toTopOf="@+id/btnRate" />
 
     <Button
         android:id="@+id/btnRate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/dimenScreenPadding"
+        android:layout_marginHorizontal="@dimen/dimenScreenPadding"
+        android:layout_marginBottom="@dimen/dimenScreenPadding"
         android:text="@string/strRate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

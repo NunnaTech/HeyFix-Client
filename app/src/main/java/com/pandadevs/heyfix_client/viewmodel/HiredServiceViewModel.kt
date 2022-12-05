@@ -1,6 +1,5 @@
 package com.pandadevs.heyfix_client.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
@@ -17,13 +16,15 @@ class HiredServiceViewModel : ViewModel() {
     var dataWorker = MutableLiveData<UserGet>()
 
     var cancelService = MutableLiveData<Boolean>()
-    var arrivedService = MutableLiveData<Boolean>()
-    var completedService = MutableLiveData<Boolean>()
     var isThereACurrentService: MutableLiveData<HiredServiceModel?> =
         MutableLiveData<HiredServiceModel?>()
 
     var isThereACurrentServiceBoolean: MutableLiveData<HiredServiceModel?> =
         MutableLiveData<HiredServiceModel?>()
+
+    fun rateHiredService(id: String, ranked:Int, review:String) {
+        HiredServiceProvider.rateHiredService(id, ranked, review)
+    }
 
     suspend fun getDataHiredService(id: String) {
         val response = HiredServiceProvider.getDataHiredService(id)
@@ -41,24 +42,25 @@ class HiredServiceViewModel : ViewModel() {
         dataWorker.value = response
     }
 
-    suspend fun cancelService(id: String) {
+    suspend fun cancelService(id: String, idClient: String, idWorker: String) {
         val response = HiredServiceProvider.statusService(id, "canceled")
+        HiredServiceProvider.activeUsers(idClient, idWorker)
         cancelService.value = response
     }
 
-    fun isThereACurrentService(idUser: String) {
-        val db = FirebaseFirestore.getInstance()
-        val docRef = db.collection("hired_service")
-            .whereEqualTo("client_id", idUser)
-        docRef.addSnapshotListener { snapshots, e ->
-            if (e != null) {
-                return@addSnapshotListener
-            }
-            if (snapshots != null) {
-                if (snapshots.documents.size > 0) {
-                    val data = snapshots.documents[0].data
+    fun isThereACurrentService(id: String) {
+        FirebaseFirestore
+            .getInstance()
+            .collection("hired_service")
+            .document(id)
+            .addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+                if (snapshots != null && snapshots.exists()) {
+                    val data = snapshots.data
                     val hiredService = HiredServiceModel(
-                        id = snapshots.documents[0].id,
+                        id = snapshots.id,
                         client_ubication = data?.get("client_ubication") as GeoPoint,
                         client_name = data["client_name"].toString(),
                         worker_ubication = data["worker_ubication"] as GeoPoint,
@@ -75,13 +77,11 @@ class HiredServiceViewModel : ViewModel() {
                         category_id = data["category_id"].toString(),
                     )
                     isThereACurrentService.value = hiredService
+
                 } else {
                     isThereACurrentService.value = null
                 }
-            } else {
-                isThereACurrentService.value = null
             }
-        }
     }
 
     fun isThereACurrentServiceBoolean(idUser: String) {

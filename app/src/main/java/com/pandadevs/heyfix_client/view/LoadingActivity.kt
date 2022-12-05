@@ -25,7 +25,6 @@ class LoadingActivity : AppCompatActivity() {
     private lateinit var myCategoryModel: CategoryModel
     private lateinit var viewModel: RequestServiceViewModel
     private lateinit var userId: String
-
     companion object {
         const val UBICATION_SELECTED: String = "LOCATION_SELECTED"
         const val CATEGORY_SELECTED: String = "CATEGORY_SELECTED"
@@ -38,7 +37,6 @@ class LoadingActivity : AppCompatActivity() {
         userId = SharedPreferenceManager(this).getUser()!!.id
         initView()
         initObservers()
-
     }
 
     private fun initView() {
@@ -100,7 +98,12 @@ class LoadingActivity : AppCompatActivity() {
         binding.tvTimer.visibility = View.GONE
         binding.lProgress.visibility = View.GONE
         binding.tvLookingFor.text = "No se encontró a ningún"
-        binding.tvLookingFor.setTextColor(ContextCompat.getColor(this, R.color.md_theme_light_tertiary))
+        binding.tvLookingFor.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.md_theme_light_tertiary
+            )
+        )
         binding.givLoading.setImageResource(R.drawable.not_found)
     }
 

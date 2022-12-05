@@ -102,6 +102,17 @@ class HiredServiceProvider {
             return response.await()
         }
 
+        fun rateHiredService(id: String, rate: Int, review: String) {
+            FirebaseFirestore
+                .getInstance()
+                .collection("hired_service")
+                .document(id)
+                .update(mapOf(
+                    "ranked" to rate,
+                    "review" to review,
+                ))
+        }
+
         suspend fun statusService(id: String, status: String): Boolean {
             val response = CompletableDeferred<Boolean>()
             FirebaseFirestore
@@ -112,6 +123,19 @@ class HiredServiceProvider {
                 .addOnSuccessListener { response.complete(true) }
                 .addOnFailureListener { response.complete(false) }
             return response.await()
+        }
+
+        fun activeUsers(idClient: String, idWorker: String){
+            FirebaseFirestore
+                .getInstance()
+                .collection("users")
+                .document(idClient)
+                .update("active", true)
+            FirebaseFirestore
+                .getInstance()
+                .collection("users")
+                .document(idWorker)
+                .update("active", true)
         }
     }
 }

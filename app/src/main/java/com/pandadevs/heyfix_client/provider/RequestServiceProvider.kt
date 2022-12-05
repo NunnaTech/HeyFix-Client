@@ -10,17 +10,29 @@ import kotlinx.coroutines.*
 
 class RequestServiceProvider {
     companion object {
-
         private var numberOfRequest = 0
         private var numberOfUsers = 0
-
-
         fun deleteRequests(userId: String) {
             FirebaseFirestore
                 .getInstance()
-                .collection("request_service").whereEqualTo("client_id", userId).get()
+                .collection("request_service")
+                .whereEqualTo("client_id", userId)
+                .get()
                 .addOnSuccessListener {
-                    it.forEach { r -> r.reference.delete() }
+                    for (document in it) {
+                        FirebaseFirestore
+                            .getInstance()
+                            .collection("request_service")
+                            .document(document.id)
+                            .update("accepted", false)
+                            .addOnSuccessListener {
+                                FirebaseFirestore
+                                    .getInstance()
+                                    .collection("request_service")
+                                    .document(document.id)
+                                    .delete()
+                            }
+                    }
                 }
         }
 
@@ -83,8 +95,11 @@ class RequestServiceProvider {
                             "address" to myGeocoder.address,
                             "client_id" to userId,
                             "worker_id" to user.user.id,
-                            "client_ubication" to GeoPoint(myGeocoder.latitude, myGeocoder.longitude)
+                            "client_ubication" to GeoPoint(
+                                myGeocoder.latitude,
+                                myGeocoder.longitude
                             )
+                        )
                     ).addOnSuccessListener { reference -> idRequestService.complete(reference.id) }
 
                 RetrofitProvider.sendNotification(
@@ -93,11 +108,7 @@ class RequestServiceProvider {
                         data = hashMapOf(
                             "id" to idRequestService.await(),
                             "title" to "Nueva solicitud de servicio",
-                            "address" to myGeocoder.address,
-                            "client_id" to userId,
                             "worker_id" to user.user.id,
-                            "client_latitude" to myGeocoder.latitude.toString(),
-                            "client_longitude" to myGeocoder.longitude.toString(),
                         )
                     )
                 )

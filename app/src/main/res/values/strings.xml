@@ -53,6 +53,8 @@
     <!--    Rate activity -->
     <string name="strRateAppBar">Calificación del servicio</string>
     <string name="strRate">Calificar</string>
+    <string name="strSkip">Saltar</string>
+    <string name="strTypeReview">Escribe una reseña</string>
 
     <!--    Register Activity-->
     <string name="strCreateNew">Crear nueva</string>

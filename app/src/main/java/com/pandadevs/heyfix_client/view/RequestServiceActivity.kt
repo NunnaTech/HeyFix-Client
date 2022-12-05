@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pandadevs.heyfix_client.R
 import com.pandadevs.heyfix_client.data.model.CategoryModel
+import com.pandadevs.heyfix_client.data.model.HiredServiceModel
+import com.pandadevs.heyfix_client.data.model.RateModel
+import com.pandadevs.heyfix_client.data.model.UserGet
 import com.pandadevs.heyfix_client.databinding.ActivityRequestServiceBinding
 import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
 import com.pandadevs.heyfix_client.viewmodel.HiredServiceViewModel
@@ -17,14 +20,14 @@ import kotlinx.coroutines.launch
 
 class RequestServiceActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityRequestServiceBinding
+    private var idHiredService: String = ""
+    private val hiredServiceViewModel: HiredServiceViewModel by viewModels()
+    private var rateModel: RateModel = RateModel("", "", "", "", "", "")
+
     companion object {
         const val ID_SERVICE_HIRED = "ID_SERVICE_HIRED"
     }
-
-    private var idHiredService: String = ""
-    private lateinit var binding: ActivityRequestServiceBinding
-
-    private val hiredServiceViewModel: HiredServiceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,30 +37,42 @@ class RequestServiceActivity : AppCompatActivity() {
         initObservers()
     }
 
+    private fun initView() {
+        idHiredService = intent.getStringExtra(ID_SERVICE_HIRED) ?: ""
+        binding.tbApp.setNavigationOnClickListener { finish() }
+        lifecycleScope.launch {
+            hiredServiceViewModel.getDataHiredService(idHiredService)
+            hiredServiceViewModel.isThereACurrentService(idHiredService)
+        }
+    }
+
     private fun initObservers() {
         hiredServiceViewModel.isThereACurrentService.observe(this) {
-            if(it!=null){
+            if (it != null) {
+                rateModel.id = it.id
+                rateModel.worker_name = it.worker_name
                 binding.tvName.text = it.worker_name
                 binding.btnCancelService.isEnabled = true
                 binding.btnChat.isEnabled = true
                 binding.btnGoogleMaps.isEnabled = true
                 binding.btnCancelService.setOnClickListener { confirmCancelService() }
-
-                if(it.canceled && !it.completed){
-                    callBackServiceCanceled()
+                binding.btnChat.setOnClickListener {
+                    startActivity(
+                        Intent(
+                            this,
+                            ChatActivity::class.java
+                        )
+                    )
                 }
-
-                if(it.arrived && !it.completed && !it.canceled){
-                    callBackServiceArrived()
-                }
-
-                if(it.completed && !it.canceled){
-                    callBackServiceCompleted()
-                }
+                if (it.canceled && !it.completed) callBackServiceCanceled()
+                if (it.arrived && !it.completed && !it.canceled) callBackServiceArrived()
+                if (it.completed && !it.canceled) callBackServiceCompleted()
             }
         }
 
         hiredServiceViewModel.dataWorker.observe(this) {
+            rateModel.worker_picture = it.picture
+            rateModel.worker_transport = it.transport
             Glide.with(this).load(it.picture).into(binding.civPicture)
             binding.tvRating.text = "Puntuación de ${it.ranked_avg}"
             binding.tvTransport.text = it.transport
@@ -65,20 +80,23 @@ class RequestServiceActivity : AppCompatActivity() {
             binding.btnCall.setOnClickListener { _ -> openCall(it.phone_number) }
         }
 
-        hiredServiceViewModel.cancelService.observe(this) {
-            if (it) {
-                goToHomeActivity()
-            }
-        }
-
         hiredServiceViewModel.dataCategory.observe(this) {
+            rateModel.category_icon = it.icon
+            rateModel.category_name = it.name
             binding.tvCategory.text = it.name
             Glide.with(this).load(it.icon).into(binding.ivCategory)
+        }
+
+        hiredServiceViewModel.cancelService.observe(this) {
+            if (it) goToHomeActivity()
         }
     }
 
     private fun callBackServiceCompleted() {
-        MaterialAlertDialogBuilder(this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+        MaterialAlertDialogBuilder(
+            this,
+            com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
+        )
             .setTitle("Servicio finalizado")
             .setIcon(R.drawable.ilus_complete)
             .setCancelable(false)
@@ -93,27 +111,18 @@ class RequestServiceActivity : AppCompatActivity() {
             .setIcon(R.drawable.ilus_arrived)
             .setCancelable(false)
             .setMessage("Vamos ve abrirle la puerta al trabajador que esta esperando.")
-            .setPositiveButton("Aceptar") { _, _ ->  }
+            .setPositiveButton("Aceptar") { _, _ -> }
             .show()
     }
 
-    private fun callBackServiceCanceled(){
+    private fun callBackServiceCanceled() {
         MaterialAlertDialogBuilder(this, R.style.MyThemeOverlay_MaterialAlertDialog_Canceled)
             .setTitle("Servicio cancelado")
             .setIcon(R.drawable.ilus_cancel)
             .setCancelable(false)
-            .setMessage("El trabajador ha cancelado el servicio.")
+            .setMessage("El servicio ha sido cancelado.")
             .setPositiveButton("Aceptar") { _, _ -> goToHomeActivity() }
             .show()
-    }
-
-    private fun initView() {
-        val user = SharedPreferenceManager(this).getUser()!!
-        idHiredService = intent.getStringExtra(ID_SERVICE_HIRED) ?: ""
-        binding.tbApp.setNavigationOnClickListener { finish() }
-        lifecycleScope.launch { hiredServiceViewModel.getDataHiredService(idHiredService) }
-        lifecycleScope.launch{ hiredServiceViewModel.isThereACurrentService(user.id) }
-        binding.btnChat.setOnClickListener { startActivity(Intent(this, ChatActivity::class.java)) }
     }
 
     private fun confirmCancelService() {
@@ -127,11 +136,15 @@ class RequestServiceActivity : AppCompatActivity() {
 
     private fun onCancelService() {
         lifecycleScope.launch {
-            hiredServiceViewModel.cancelService(idHiredService)
+            hiredServiceViewModel.cancelService(
+                idHiredService,
+                hiredServiceViewModel.isThereACurrentServiceBoolean.value!!.client_id,
+                hiredServiceViewModel.isThereACurrentServiceBoolean.value!!.worker_id,
+            )
         }
     }
 
-    private fun goToHomeActivity(){
+    private fun goToHomeActivity() {
         val intent = Intent(this, MainActivity::class.java)
         finishAffinity()
         startActivity(intent)
@@ -139,7 +152,7 @@ class RequestServiceActivity : AppCompatActivity() {
 
     private fun goToRateService() {
         val intent = Intent(this, RateActivity::class.java)
-        intent.putExtra(RateActivity.ID_SERVICE_HIRED, idHiredService)
+        intent.putExtra(RateActivity.RATE_MODEL, rateModel)
         startActivity(intent)
     }
 

@@ -24,11 +24,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initView()
+    }
+
+    private fun initView() {
+        val userId = SharedPreferenceManager(this).getUser()!!.id
         val navigation: BottomNavigationView = binding.bnvNavigation
         val navController = findNavController(R.id.fragmentNavHost)
         navigation.setupWithNavController(navController)
-
-        initObservers()
+        lifecycleScope.launch { hiredServiceViewModel.isThereACurrentServiceBoolean(userId) }
     }
 
     private fun initObservers() {
@@ -43,9 +47,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val userId = SharedPreferenceManager(this).getUser()!!.id
         setLastOnline()
-        lifecycleScope.launch { hiredServiceViewModel.isThereACurrentServiceBoolean(userId) }
+        initObservers()
     }
 
     private fun setLastOnline() {
