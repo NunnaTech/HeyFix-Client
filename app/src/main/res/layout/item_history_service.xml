@@ -37,8 +37,10 @@
                         android:id="@+id/tvCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Electricista"
-                        android:textColor="@color/SoftlyBlack"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="Cargando categoría..."
+                        android:textColor="@color/md_theme_light_secondary"
                         android:textSize="@dimen/dimenText"
                         android:textStyle="bold" />
 
@@ -48,7 +50,6 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:text="Completado"
-                        android:textColor="@color/Accent"
                         android:textSize="@dimen/dimenText"
                         android:textStyle="bold" />
 
@@ -58,25 +59,30 @@
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Juan Torres"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Cargando nombre..."
                     android:textColor="@color/md_theme_light_primary"
                     android:textSize="@dimen/dimenNormalText"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvTransport"
+                    android:id="@+id/tvAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nissan Tsuru 93"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Cargando dirección..."
                     android:textColor="@color/SoftlyBlack"
                     android:textSize="@dimen/dimenText" />
 
                 <TextView
                     android:id="@+id/tvDateHired"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="12 de noviembre de 2022"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Cargando fecha..."
                     android:textColor="@color/SoftlyGray"
                     android:textSize="@dimen/dimenText"
                     app:layout_constraintBottom_toBottomOf="parent"
