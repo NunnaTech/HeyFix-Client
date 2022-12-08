@@ -14,13 +14,9 @@ class HiredServiceViewModel : ViewModel() {
 
     var dataCategory = MutableLiveData<CategoryModel>()
     var dataWorker = MutableLiveData<UserGet>()
-
     var cancelService = MutableLiveData<Boolean>()
-    var isThereACurrentService: MutableLiveData<HiredServiceModel?> =
-        MutableLiveData<HiredServiceModel?>()
-
-    var isThereACurrentServiceBoolean: MutableLiveData<HiredServiceModel?> =
-        MutableLiveData<HiredServiceModel?>()
+    var isThereACurrentService: MutableLiveData<HiredServiceModel?> = MutableLiveData<HiredServiceModel?>()
+    var isThereACurrentServiceBoolean: MutableLiveData<HiredServiceModel?> = MutableLiveData<HiredServiceModel?>()
 
     fun rateHiredService(id: String, ranked:Int, review:String) {
         HiredServiceProvider.rateHiredService(id, ranked, review)
@@ -45,6 +41,7 @@ class HiredServiceViewModel : ViewModel() {
     suspend fun cancelService(id: String, idClient: String, idWorker: String) {
         val response = HiredServiceProvider.statusService(id, "canceled")
         HiredServiceProvider.activeUsers(idClient, idWorker)
+        HiredServiceProvider.deleteChatRealTime(id)
         cancelService.value = response
     }
 

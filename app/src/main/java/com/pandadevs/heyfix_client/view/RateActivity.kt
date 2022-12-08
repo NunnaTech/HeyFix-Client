@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pandadevs.heyfix_client.R
-import com.pandadevs.heyfix_client.data.model.RateModel
+import com.pandadevs.heyfix_client.data.model.RateChatModel
 import com.pandadevs.heyfix_client.databinding.ActivityRateBinding
 import com.pandadevs.heyfix_client.utils.SnackbarShow
 import com.pandadevs.heyfix_client.viewmodel.HiredServiceViewModel
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class RateActivity : AppCompatActivity() {
     lateinit var binding: ActivityRateBinding
     lateinit var buttons: ArrayList<ImageButton>
-    lateinit var dataRateModel: RateModel
+    lateinit var dataRateModel: RateChatModel
     private var rate: Int = 0
     private var review: String = ""
     private val hiredServiceViewModel: HiredServiceViewModel by viewModels()
@@ -35,7 +35,7 @@ class RateActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        dataRateModel = intent.getSerializableExtra(RATE_MODEL) as RateModel
+        dataRateModel = intent.getSerializableExtra(RATE_MODEL) as RateChatModel
         binding.tvName.text = dataRateModel.worker_name
         binding.tvCategory.text = dataRateModel.category_name
         binding.tvTransport.text = dataRateModel.worker_transport

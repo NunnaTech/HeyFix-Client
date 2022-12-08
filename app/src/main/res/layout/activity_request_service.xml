@@ -61,28 +61,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="5dp"
-                    android:src="@drawable/ilus_star" />
-
-                <TextView
-                    android:id="@+id/tvRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="Cargando puntuación..."
-                    android:textSize="@dimen/dimenText" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical">
 
@@ -149,7 +127,7 @@
             app:icon="@drawable/ic_chat" />
 
         <Button
-            android:id="@+id/btnGoogleMaps"
+            android:id="@+id/btnMap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/Accent"

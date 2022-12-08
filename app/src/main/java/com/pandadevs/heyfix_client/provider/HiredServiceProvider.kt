@@ -1,6 +1,7 @@
 package com.pandadevs.heyfix_client.provider
 
 import com.google.firebase.Timestamp
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.pandadevs.heyfix_client.data.model.CategoryModel
@@ -11,6 +12,13 @@ import kotlinx.coroutines.CompletableDeferred
 class HiredServiceProvider {
 
     companion object {
+
+        fun deleteChatRealTime(id:String){
+            FirebaseDatabase.getInstance()
+                .getReference(id)
+                .removeValue()
+        }
+
         suspend fun getDataHiredService(id: String): HiredServiceModel {
             val response: CompletableDeferred<HiredServiceModel> =
                 CompletableDeferred<HiredServiceModel>()

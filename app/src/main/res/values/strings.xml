@@ -81,5 +81,6 @@
     <!--   Profile Fragment-->
     <string name="strPhone">Teléfono</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_map_service">MapServiceActivity</string>
 
 </resources>

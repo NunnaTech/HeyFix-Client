@@ -1,7 +1,9 @@
 package com.pandadevs.heyfix_client.provider
 
+import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.pandadevs.heyfix_client.data.model.HistorialServiceModel
 import kotlinx.coroutines.CompletableDeferred
 
@@ -13,10 +15,10 @@ class HistorialServicesProvider {
                 .getInstance()
                 .collection("hired_service")
                 .whereEqualTo("client_id", idUser)
-                .whereEqualTo("completed", true)
-                .whereEqualTo("canceled", false)
+                .orderBy("date_hired", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener {
+                    it.documents
                     val list = mutableListOf<HistorialServiceModel>()
                     for (document in it) {
                         val service = HistorialServiceModel(

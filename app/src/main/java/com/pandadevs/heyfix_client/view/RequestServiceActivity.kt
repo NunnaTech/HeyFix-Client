@@ -9,12 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pandadevs.heyfix_client.R
-import com.pandadevs.heyfix_client.data.model.CategoryModel
-import com.pandadevs.heyfix_client.data.model.HiredServiceModel
-import com.pandadevs.heyfix_client.data.model.RateModel
-import com.pandadevs.heyfix_client.data.model.UserGet
+import com.pandadevs.heyfix_client.data.model.RateChatModel
 import com.pandadevs.heyfix_client.databinding.ActivityRequestServiceBinding
-import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
 import com.pandadevs.heyfix_client.viewmodel.HiredServiceViewModel
 import kotlinx.coroutines.launch
 
@@ -23,7 +19,7 @@ class RequestServiceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRequestServiceBinding
     private var idHiredService: String = ""
     private val hiredServiceViewModel: HiredServiceViewModel by viewModels()
-    private var rateModel: RateModel = RateModel("", "", "", "", "", "")
+    private var rateModel: RateChatModel = RateChatModel("", "", "", "", "", "")
 
     companion object {
         const val ID_SERVICE_HIRED = "ID_SERVICE_HIRED"
@@ -49,20 +45,19 @@ class RequestServiceActivity : AppCompatActivity() {
     private fun initObservers() {
         hiredServiceViewModel.isThereACurrentService.observe(this) {
             if (it != null) {
+                idHiredService = it.id
                 rateModel.id = it.id
                 rateModel.worker_name = it.worker_name
                 binding.tvName.text = it.worker_name
                 binding.btnCancelService.isEnabled = true
                 binding.btnChat.isEnabled = true
-                binding.btnGoogleMaps.isEnabled = true
+                binding.btnMap.isEnabled = true
                 binding.btnCancelService.setOnClickListener { confirmCancelService() }
                 binding.btnChat.setOnClickListener {
-                    startActivity(
-                        Intent(
-                            this,
-                            ChatActivity::class.java
-                        )
-                    )
+                    goToChatActivity()
+                }
+                binding.btnMap.setOnClickListener {
+                    goToMapActivity()
                 }
                 if (it.canceled && !it.completed) callBackServiceCanceled()
                 if (it.arrived && !it.completed && !it.canceled) callBackServiceArrived()
@@ -74,7 +69,6 @@ class RequestServiceActivity : AppCompatActivity() {
             rateModel.worker_picture = it.picture
             rateModel.worker_transport = it.transport
             Glide.with(this).load(it.picture).into(binding.civPicture)
-            binding.tvRating.text = "Puntuación de ${it.ranked_avg}"
             binding.tvTransport.text = it.transport
             binding.btnCall.isEnabled = true
             binding.btnCall.setOnClickListener { _ -> openCall(it.phone_number) }
@@ -86,10 +80,18 @@ class RequestServiceActivity : AppCompatActivity() {
             binding.tvCategory.text = it.name
             Glide.with(this).load(it.icon).into(binding.ivCategory)
         }
+    }
 
-        hiredServiceViewModel.cancelService.observe(this) {
-            if (it) goToHomeActivity()
-        }
+    private fun goToMapActivity() {
+        val intent = Intent(this, MapServiceActivity::class.java)
+        intent.putExtra(MapServiceActivity.ID_HIRED_SERVICE, idHiredService)
+        startActivity(intent)
+    }
+
+    private fun goToChatActivity() {
+        val intent = Intent(this, ChatActivity::class.java)
+        intent.putExtra(ChatActivity.CHAT_MODEL, rateModel)
+        startActivity(intent)
     }
 
     private fun callBackServiceCompleted() {
@@ -138,8 +140,8 @@ class RequestServiceActivity : AppCompatActivity() {
         lifecycleScope.launch {
             hiredServiceViewModel.cancelService(
                 idHiredService,
-                hiredServiceViewModel.isThereACurrentServiceBoolean.value!!.client_id,
-                hiredServiceViewModel.isThereACurrentServiceBoolean.value!!.worker_id,
+                hiredServiceViewModel.isThereACurrentService.value!!.client_id,
+                hiredServiceViewModel.isThereACurrentService.value!!.worker_id,
             )
         }
     }

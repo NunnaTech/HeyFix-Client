@@ -2,7 +2,7 @@ package com.pandadevs.heyfix_client.data.model
 
 import java.io.Serializable
 
-data class RateModel(
+data class RateChatModel(
     var id: String,
     var worker_name: String,
     var category_name: String,
