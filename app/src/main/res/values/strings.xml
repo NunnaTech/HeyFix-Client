@@ -82,5 +82,7 @@
     <string name="strPhone">Teléfono</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_map_service">MapServiceActivity</string>
+    <string name="strNoCompleteProfileContent">Se necesita que completes tu perfil o no podrás solicitar servicios</string>
+    <string name="strNoCompleteProfile">Perfil sin completar</string>
 
 </resources>

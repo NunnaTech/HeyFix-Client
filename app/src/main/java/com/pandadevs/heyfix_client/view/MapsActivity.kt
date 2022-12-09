@@ -131,31 +131,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     private fun searchByAddress() {
-        val address = binding.etDirections.text.toString()
-        if (address.isEmpty()) {
-            binding.etDirectionsLayout.error = "Debe ingresar una dirección"
-        } else {
-            binding.etDirectionsLayout.error = null
-            CoroutineScope(Dispatchers.IO).launch {
-                val geocoder = Geocoder(this@MapsActivity)
-                val addresses = geocoder.getFromLocationName(address, 1)
-                runOnUiThread {
-                    try {
-                        if (addresses!!.size > 0) {
-                            val firstAddress = addresses[0]
-                            ubicationSelected.address = address
-                            ubicationSelected.latitude = firstAddress.latitude
-                            ubicationSelected.longitude = firstAddress.longitude
-                            val latlong =
-                                LatLng(ubicationSelected.latitude, ubicationSelected.longitude)
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17f))
-                        }
-                    } catch (e: Exception) {
-                        Log.e("MapsActivity", "searchByAddress: ${e.message}")
-                    }
-                }
-            }
-        }
+       try {
+           val address = binding.etDirections.text.toString()
+           if (address.isEmpty()) {
+               binding.etDirectionsLayout.error = "Debe ingresar una dirección"
+           } else {
+               binding.etDirectionsLayout.error = null
+               CoroutineScope(Dispatchers.IO).launch {
+                   val geocoder = Geocoder(this@MapsActivity)
+                   val addresses = geocoder.getFromLocationName(address, 1)
+                   runOnUiThread {
+                       try {
+                           if (addresses!!.size > 0) {
+                               val firstAddress = addresses[0]
+                               ubicationSelected.address = address
+                               ubicationSelected.latitude = firstAddress.latitude
+                               ubicationSelected.longitude = firstAddress.longitude
+                               val latlong =
+                                   LatLng(ubicationSelected.latitude, ubicationSelected.longitude)
+                               mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17f))
+                           }
+                       } catch (e: Exception) {
+                           Log.e("MapsActivity", "searchByAddress: ${e.message}")
+                       }
+                   }
+               }
+           }
+       }catch (e:Exception){
+         SnackbarShow.showSnackbar(binding.root,"Error al buscar la dirección, intenta buscar otra")
+       }
     }
 
     private fun cameraListener() {
@@ -179,7 +183,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     try {
                         setOnAutoComplete(arrayDirections)
                     } catch (ex: Exception) {
-                        Log.e("MapsActivity", ex.message.toString())
+                        SnackbarShow.showSnackbar(binding.root,"Error al buscar la dirección, intenta buscar otra")
                     }
                 }
             }

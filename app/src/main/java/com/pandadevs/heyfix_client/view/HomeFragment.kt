@@ -26,9 +26,7 @@ class HomeFragment : Fragment(), CategoryAdapter.MyEvents {
     private lateinit var viewModel: CategoryViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
@@ -38,24 +36,30 @@ class HomeFragment : Fragment(), CategoryAdapter.MyEvents {
     }
 
     private fun initView() {
-        val user:UserGet? = SharedPreferenceManager(this.requireContext()).getUser()
+        val user: UserGet? = SharedPreferenceManager(this.requireContext()).getUser()
         binding.tvName.text = user?.name
         binding.tvWelcome.text = TimeDay.getTime()
-        lifecycleScope.launch{ viewModel.getAllCategories() }
+        lifecycleScope.launch { viewModel.getAllCategories() }
     }
 
     private fun initObservers() {
-        viewModel.isLoading.observe(viewLifecycleOwner){
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             binding.llLoading.visibility = if (it) View.VISIBLE else View.INVISIBLE
         }
-        viewModel.error.observe(viewLifecycleOwner){
+        viewModel.error.observe(viewLifecycleOwner) {
             binding.tvNoCategories.visibility = if (it) View.VISIBLE else View.INVISIBLE
         }
-        viewModel.result.observe(viewLifecycleOwner){
-            binding.rvServices.layoutManager = GridLayoutManager(context, 2)
-            adapter = CategoryAdapter(this, requireContext())
-            binding.rvServices.adapter = adapter
-            adapter?.submitList(it)
+        viewModel.result.observe(viewLifecycleOwner) {
+            val user: UserGet? = SharedPreferenceManager(this.requireContext()).getUser()
+            if (user?.phone_number.isNullOrEmpty()) {
+                binding.mcvCompleteProfile.visibility = View.VISIBLE
+            } else {
+                binding.rvServices.visibility = View.VISIBLE
+                binding.rvServices.layoutManager = GridLayoutManager(context, 2)
+                adapter = CategoryAdapter(this, requireContext())
+                binding.rvServices.adapter = adapter
+                adapter?.submitList(it)
+            }
         }
     }
 
