@@ -5,14 +5,37 @@ import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
-import com.pandadevs.heyfix_client.data.model.CategoryModel
-import com.pandadevs.heyfix_client.data.model.MyGeocoder
-import com.pandadevs.heyfix_client.data.model.UserGet
-import com.pandadevs.heyfix_client.data.model.UserSort
-import kotlinx.coroutines.CompletableDeferred
+import com.pandadevs.heyfix_client.data.model.*
+import kotlinx.coroutines.*
 
 class RequestServiceProvider {
     companion object {
+        private var numberOfRequest = 0
+        private var numberOfUsers = 0
+        fun deleteRequests(userId: String) {
+            FirebaseFirestore
+                .getInstance()
+                .collection("request_service")
+                .whereEqualTo("client_id", userId)
+                .get()
+                .addOnSuccessListener {
+                    for (document in it) {
+                        FirebaseFirestore
+                            .getInstance()
+                            .collection("request_service")
+                            .document(document.id)
+                            .update("accepted", false)
+                            .addOnSuccessListener {
+                                FirebaseFirestore
+                                    .getInstance()
+                                    .collection("request_service")
+                                    .document(document.id)
+                                    .delete()
+                            }
+                    }
+                }
+        }
+
         suspend fun searchRequestService(
             categoryModel: CategoryModel,
             client: MyGeocoder
@@ -34,7 +57,7 @@ class RequestServiceProvider {
                             current_position = u.data["current_position"] as? GeoPoint,
                             email = u.data["email"].toString(),
                             first_surname = u.data["first_surname"].toString(),
-                            last_online = u.data["last_online"] as? Timestamp,
+                            last_online = u.data["last_online"] as Timestamp,
                             name = u.data["name"].toString(),
                             phone_number = u.data["phone_number"].toString(),
                             picture = u.data["picture"].toString(),
@@ -45,14 +68,77 @@ class RequestServiceProvider {
                             id = u.reference.id
                         )
                     }
-                    val result = RequestServiceProvider().orderBestUser(users, client)
-                    response.complete(result)
+                    response.complete(RequestServiceProvider().orderBestUser(users, client))
                 }
                 .addOnFailureListener {
                     response.complete(mutableListOf())
-                    Log.e("Error", it.message.toString())
                 }
             return response.await()
+        }
+
+        suspend fun waitForResponse(
+            userId: String,
+            myGeocoder: MyGeocoder,
+            users: MutableList<UserSort>
+        ): String {
+            numberOfRequest = 0
+            numberOfUsers = users.size
+            val idRequestAccepted = CompletableDeferred<String>()
+            for (user in users) {
+                val idRequestService = CompletableDeferred<String>()
+                FirebaseFirestore
+                    .getInstance()
+                    .collection("request_service")
+                    .add(
+                        hashMapOf(
+                            "accepted" to "",
+                            "address" to myGeocoder.address,
+                            "client_id" to userId,
+                            "worker_id" to user.user.id,
+                            "client_ubication" to GeoPoint(
+                                myGeocoder.latitude,
+                                myGeocoder.longitude
+                            )
+                        )
+                    ).addOnSuccessListener { reference -> idRequestService.complete(reference.id) }
+
+                RetrofitProvider.sendNotification(
+                    NotificationModel(
+                        to = user.user.tokenNotification,
+                        data = hashMapOf(
+                            "id" to idRequestService.await(),
+                            "title" to "Nueva solicitud de servicio",
+                            "worker_id" to user.user.id,
+                        )
+                    )
+                )
+
+                FirebaseFirestore
+                    .getInstance()
+                    .collection("request_service")
+                    .document(idRequestService.await())
+                    .addSnapshotListener { value, _ ->
+                        if (value != null && value.exists()) {
+                            if (value["accepted"].toString() != "") {
+                                val isAccepted = value["accepted"].toString().toBoolean()
+                                if (isAccepted) {
+                                    idRequestAccepted.complete(value.id)
+                                } else {
+                                    FirebaseFirestore
+                                        .getInstance()
+                                        .collection("request_service")
+                                        .document(value.id)
+                                        .delete()
+                                }
+                                this@Companion.numberOfRequest += 1
+                                if (this@Companion.numberOfRequest == this@Companion.numberOfUsers) {
+                                    idRequestAccepted.complete("")
+                                }
+                            }
+                        }
+                    }
+            }
+            return idRequestAccepted.await()
         }
     }
 

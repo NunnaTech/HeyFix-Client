@@ -53,6 +53,8 @@
     <!--    Rate activity -->
     <string name="strRateAppBar">Calificación del servicio</string>
     <string name="strRate">Calificar</string>
+    <string name="strSkip">Saltar</string>
+    <string name="strTypeReview">Escribe una reseña</string>
 
     <!--    Register Activity-->
     <string name="strCreateNew">Crear nueva</string>
@@ -65,7 +67,9 @@
 
     <!--  Request service Activity  -->
     <string name="strServiceInProgress">Servicio en proceso</string>
-    <string name="strGoToChat">Ir al chat</string>
+    <string name="strGoToChat">Chat</string>
+    <string name="strGoToCall">Llamar</string>
+    <string name="strGoToMap">Mapa</string>
     <string name="strCancelService">Cancelar servicio</string>
 
     <!--  Maps Activity  -->
@@ -77,5 +81,8 @@
     <!--   Profile Fragment-->
     <string name="strPhone">Teléfono</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_map_service">MapServiceActivity</string>
+    <string name="strNoCompleteProfileContent">Se necesita que completes tu perfil o no podrás solicitar servicios</string>
+    <string name="strNoCompleteProfile">Perfil sin completar</string>
 
 </resources>

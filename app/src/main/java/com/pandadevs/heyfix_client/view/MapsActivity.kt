@@ -53,7 +53,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         isLocationPermissionGranted()
         requestLocationPermission()
         categoryModel = intent.getSerializableExtra(CATEGORY) as CategoryModel
-        binding.tvCategory.text = categoryModel.name
+        binding.tvCategory.text = " ${categoryModel.name}"
         binding.tbApp.setNavigationOnClickListener { finish() }
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -118,7 +118,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             currentUserLocation = LatLng(lastKnownLocation!!.latitude, lastKnownLocation.longitude)
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentUserLocation, 17f))
             cameraListener()
-            UserLastProvider.setLastCurrentPosition(this, GeoPoint(currentUserLocation.latitude, currentUserLocation.longitude))
+            UserLastProvider.setLastCurrentPosition(
+                this,
+                GeoPoint(currentUserLocation.latitude, currentUserLocation.longitude)
+            )
             binding.btnSearchDirection.setOnClickListener { searchByAddress() }
             binding.btnSaveUbication.setOnClickListener { saveUbication() }
         } else {
@@ -128,31 +131,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     private fun searchByAddress() {
-        val address = binding.etDirections.text.toString()
-        if (address.isEmpty()) {
-            binding.etDirectionsLayout.error = "Debe ingresar una dirección"
-        } else {
-            binding.etDirectionsLayout.error = null
-            CoroutineScope(Dispatchers.IO).launch {
-                val geocoder = Geocoder(this@MapsActivity)
-                val addresses = geocoder.getFromLocationName(address, 1)
-                runOnUiThread {
-                    try {
-                        if (addresses.size > 0) {
-                            val firstAddress = addresses[0]
-                            ubicationSelected.address = address
-                            ubicationSelected.latitude = firstAddress.latitude
-                            ubicationSelected.longitude = firstAddress.longitude
-                            val latlong =
-                                LatLng(ubicationSelected.latitude, ubicationSelected.longitude)
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17f))
-                        }
-                    } catch (e: Exception) {
-                        Log.e("MapsActivity", "searchByAddress: ${e.message}")
-                    }
-                }
-            }
-        }
+       try {
+           val address = binding.etDirections.text.toString()
+           if (address.isEmpty()) {
+               binding.etDirectionsLayout.error = "Debe ingresar una dirección"
+           } else {
+               binding.etDirectionsLayout.error = null
+               CoroutineScope(Dispatchers.IO).launch {
+                   val geocoder = Geocoder(this@MapsActivity)
+                   val addresses = geocoder.getFromLocationName(address, 1)
+                   runOnUiThread {
+                       try {
+                           if (addresses!!.size > 0) {
+                               val firstAddress = addresses[0]
+                               ubicationSelected.address = address
+                               ubicationSelected.latitude = firstAddress.latitude
+                               ubicationSelected.longitude = firstAddress.longitude
+                               val latlong =
+                                   LatLng(ubicationSelected.latitude, ubicationSelected.longitude)
+                               mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlong, 17f))
+                           }
+                       } catch (e: Exception) {
+                           Log.e("MapsActivity", "searchByAddress: ${e.message}")
+                       }
+                   }
+               }
+           }
+       }catch (e:Exception){
+         SnackbarShow.showSnackbar(binding.root,"Error al buscar la dirección, intenta buscar otra")
+       }
     }
 
     private fun cameraListener() {
@@ -167,7 +174,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         CoroutineScope(Dispatchers.IO).launch {
             val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
             val addresses = geocoder.getFromLocation(lat, long, 3)
-            if (addresses.size > 0) {
+            if (addresses!!.size > 0) {
                 ubicationSelected.address = addresses[0].getAddressLine(0)
                 ubicationSelected.latitude = lat
                 ubicationSelected.longitude = long
@@ -176,7 +183,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     try {
                         setOnAutoComplete(arrayDirections)
                     } catch (ex: Exception) {
-                        Log.e("MapsActivity", ex.message.toString())
+                        SnackbarShow.showSnackbar(binding.root,"Error al buscar la dirección, intenta buscar otra")
                     }
                 }
             }
@@ -184,10 +191,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun saveUbication() {
-        val intent = Intent(this, LoadingActivity::class.java)
-        intent.putExtra(LoadingActivity.UBICATION_SELECTED, ubicationSelected)
-        intent.putExtra(LoadingActivity.CATEGORY_SELECTED, categoryModel)
-        startActivity(intent)
+        if (binding.etDirections.text.isNullOrEmpty()) {
+            SnackbarShow.showSnackbar(binding.root, "Espere a que cargue la dirección")
+        } else {
+            val intent = Intent(this, LoadingActivity::class.java)
+            intent.putExtra(LoadingActivity.UBICATION_SELECTED, ubicationSelected)
+            intent.putExtra(LoadingActivity.CATEGORY_SELECTED, categoryModel)
+            startActivity(intent)
+        }
+
     }
 
     private fun setOnAutoComplete(list: List<String>) {

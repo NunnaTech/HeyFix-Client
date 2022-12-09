@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.doOnTextChanged
@@ -22,6 +23,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pandadevs.heyfix_client.data.model.UserGet
 import com.pandadevs.heyfix_client.databinding.ActivityLoginBinding
+import com.pandadevs.heyfix_client.utils.LoadingScreen
 import com.pandadevs.heyfix_client.utils.SharedPreferenceManager
 import com.pandadevs.heyfix_client.utils.SnackbarShow
 import com.pandadevs.heyfix_client.utils.Validations.fieldNotEmpty
@@ -118,6 +120,7 @@ class LoginActivity : AppCompatActivity() {
     fun getDataToPreferences(method: String, userEmailGoogle: String?) {
         val email =
             if (method == "email") binding.etEmail.editText?.text.toString() else userEmailGoogle
+        LoadingScreen.show(this,"Iniciando Sesión...",false)
         FirebaseFirestore.getInstance()
             .collection("users")
             .whereEqualTo("email", email)
@@ -140,8 +143,11 @@ class LoginActivity : AppCompatActivity() {
                     null,
                     documents.documents[0].data!!["tokenNotification"].toString(),
                 )
+                SharedPreferenceManager(applicationContext).saveProviderMail(method)
+                SharedPreferenceManager(this).saveUID(FirebaseAuth.getInstance().currentUser!!.uid)
                 SharedPreferenceManager(this).saveUser(user)
                 SharedPreferenceManager(this).saveSession()
+                LoadingScreen.hide()
                 startActivity(Intent(this, MainActivity::class.java))
             }
     }
@@ -171,6 +177,7 @@ class LoginActivity : AppCompatActivity() {
             val account = task.getResult(ApiException::class.java)
             val credenciales = GoogleAuthProvider
                 .getCredential(account.idToken, null)
+            LoadingScreen.show(this,"Iniciando Sesión...",false)
             lifecycleScope.launch {
                 if (existUser(account.email!!) == true) {
                     FirebaseAuth.getInstance()
@@ -179,6 +186,7 @@ class LoginActivity : AppCompatActivity() {
                             if (it.isSuccessful) {
                                 getDataToPreferences("google", account.email)
                             } else {
+                                LoadingScreen.hide()
                                 Snackbar.make(
                                     binding.root,
                                     "No existe una cuenta vinculada",
@@ -187,6 +195,7 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
                 } else {
+                    LoadingScreen.hide()
                     Snackbar.make(
                         binding.root,
                         "No existe una cuenta vinculada",

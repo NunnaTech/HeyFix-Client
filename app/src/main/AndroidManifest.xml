@@ -36,12 +36,14 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
+            android:name=".view.MapServiceActivity"
+            android:exported="false"
+            android:label="@string/title_activity_map_service" />
+        <activity
             android:name=".view.MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.SplashActivity"
             android:exported="true"
@@ -55,16 +57,15 @@
         <activity
             android:name=".view.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.ChatActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.RateActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
+            android:exported="true"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.LoginActivity"
             android:exported="false"
@@ -72,22 +73,19 @@
         <activity
             android:name=".view.LoadingActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.RegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.AboutActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.RequestServiceActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="true"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.ChangePasswordActivity"
             android:exported="false"

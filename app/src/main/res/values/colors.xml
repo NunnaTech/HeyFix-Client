@@ -37,4 +37,7 @@
 
     <!--  Custom colors:  -->
     <color name="Accent">#00AC1C</color>
+    <color name="Accent_onSurface">#EBFFEE</color>
+    <drawable name="transperent_color">#00000000</drawable>
+
 </resources>

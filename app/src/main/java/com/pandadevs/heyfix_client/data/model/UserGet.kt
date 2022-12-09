@@ -2,6 +2,7 @@ package com.pandadevs.heyfix_client.data.model
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
+import java.io.Serializable
 
 data class UserGet(
     var id: String,
